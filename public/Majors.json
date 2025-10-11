@@ -1,0 +1,527 @@
+{
+  "id": "58356c78-a7c9-4874-b970-0f54adbf1c6f",
+  "startedAt": "2025-10-11T18:58:06.046Z",
+  "endedAt": "2025-10-11T18:58:10.720Z",
+  "endpoint": "extract",
+  "formState": {
+    "extractSetupCompleted": true,
+    "urls": [
+      "https://admissions.northeastern.edu/academics/areas-of-study/"
+    ],
+    "extractSchema": {
+      "type": "object",
+      "properties": {
+        "areas_of_study": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "area_name": {
+                "type": "string"
+              },
+              "school_name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "area_name",
+              "school_name"
+            ]
+          }
+        }
+      },
+      "required": [
+        "areas_of_study"
+      ]
+    },
+    "extractPrompt": "Extract all the areas of study and the corresponding school they belong to.",
+    "enableWebSearch": false,
+    "options": {
+      "onlyMainContent": false,
+      "parsePDF": true,
+      "stealthMode": false,
+      "excludeTags": [],
+      "includeTags": [],
+      "waitFor": "",
+      "timeout": "",
+      "maxAge": "2 days",
+      "ignoreSitemap": false,
+      "crawlEntireDomain": false,
+      "sitemap": "include",
+      "limit": "10",
+      "maxDepth": "",
+      "excludePaths": [],
+      "includePaths": [],
+      "includeSubdomains": false,
+      "search": "",
+      "scrapeContentFromSearchResults": true,
+      "timeBasedSearch": "",
+      "location": "",
+      "prompt": ""
+    },
+    "formats": [
+      "markdown"
+    ],
+    "sources": [
+      "web"
+    ],
+    "categories": [],
+    "jsonSchema": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "company_name": {
+          "type": "string"
+        },
+        "company_description": {
+          "type": "string"
+        }
+      }
+    },
+    "agent": {},
+    "url": "",
+    "endpoint": "extract"
+  },
+  "status": "success",
+  "version": "e5esrUlemZrdCpgoHMqUI",
+  "data": {
+    "areas_of_study": [
+      {
+        "area_name": "Africana Studies",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "American Sign Language",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "American Sign Language – English Interpreting",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Applied Physics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Architectural Studies",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Architecture",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Art: Art, Visual Studies",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Behavioral Neuroscience*",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Biochemistry",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Bioengineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Biology*",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Biomedical Physics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Bouvé Undeclared",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "Business Administration: Accounting",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Accounting and Advisory Services",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Brand Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Business Analytics",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Corporate Innovation",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Entrepreneurial Startups",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Family Business",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Finance",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Fintech",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Healthcare Management and Consulting",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Management Information Systems",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Marketing",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Marketing Analytics",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Social Innovation and Entrepreneurship",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Supply Chain Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration: Undeclared",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Business Administration*",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "CAMD Undeclared",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Cell and Molecular Biology",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Chemical Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Chemistry",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Civil Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "COE Undeclared",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Communication Studies",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Computer Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Computer Science*",
+        "school_name": "Khoury College of Computer Sciences"
+      },
+      {
+        "area_name": "Computing and Law",
+        "school_name": "Khoury College of Computer Sciences"
+      },
+      {
+        "area_name": "Criminology and Criminal Justice",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Cultural Anthropology",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Cybersecurity",
+        "school_name": "Khoury College of Computer Sciences"
+      },
+      {
+        "area_name": "Data Science",
+        "school_name": "Khoury College of Computer Sciences"
+      },
+      {
+        "area_name": "Design",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Discover Oakland* (Interdisciplinary Studies)",
+        "school_name": ""
+      },
+      {
+        "area_name": "Economics",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Electrical Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "English",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Environmental and Sustainability Sciences",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Environmental Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Environmental Science",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Environmental Studies",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Explore all 180+ combined majors!",
+        "school_name": "Combined Majors"
+      },
+      {
+        "area_name": "Explore Program for undeclared students",
+        "school_name": "Explore Program for undeclared students"
+      },
+      {
+        "area_name": "Game Art and Animation",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Game Design",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Global Asian Studies",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Health Science*",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "History",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "History, Culture, and Law",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Human Services",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Industrial Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "International Affairs",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "International Business: Accounting",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Accounting and Advisory Services",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Brand Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Business Analytics",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Corporate Innovation",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Entrepreneurial Startups",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Family Business",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Finance",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Fintech",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Healthcare Management and Consulting",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Management Information Systems",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Marketing",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Marketing Analytics",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Social Innovation and Entrepreneurship",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Supply Chain Management",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "International Business: Undeclared",
+        "school_name": "D'Amore-McKim School of Business"
+      },
+      {
+        "area_name": "Journalism",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Landscape Architecture",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Linguistics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Marine Biology",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Mathematics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Mechanical Engineering",
+        "school_name": "College of Engineering"
+      },
+      {
+        "area_name": "Media and Screen Studies",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Media Arts",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Music",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Music Industry",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Music Technology",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Northeastern Explore Program (Undeclared)",
+        "school_name": "Explore Program for undeclared students"
+      },
+      {
+        "area_name": "Nursing",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "Pharmaceutical Sciences",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "Pharmacy (PharmD)",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "Philosophy",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Physics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Political Science",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Politics, Philosophy, and Economics",
+        "school_name": "College of Science"
+      },
+      {
+        "area_name": "Psychology",
+        "school_name": "College of Science "
+      },
+      {
+        "area_name": "Public Health",
+        "school_name": "Bouvé College of Health Sciences "
+      },
+      {
+        "area_name": "Public Relations",
+        "school_name": "College of Arts, Media and Design"
+      },
+      {
+        "area_name": "Religous Studies",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Sociology",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Spanish",
+        "school_name": "College of Social Sciences and Humanities"
+      },
+      {
+        "area_name": "Speech Language Pathology and Audiology",
+        "school_name": "Bouvé College of Health Sciences"
+      },
+      {
+        "area_name": "Theatre",
+        "school_name": "College of Arts, Media and Design"
+      }
+    ]
+  }
+}

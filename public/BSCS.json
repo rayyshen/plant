@@ -1,0 +1,773 @@
+{
+  "id": "26129d9e-3017-4f50-956c-1a783a67baa8",
+  "startedAt": "2025-10-11T19:15:36.858Z",
+  "endedAt": "2025-10-11T19:15:37.022Z",
+  "endpoint": "extract",
+  "formState": {
+    "extractSetupCompleted": true,
+    "urls": [
+      "https://catalog.northeastern.edu/undergraduate/computer-information-science/computer-science/bscs/#programrequirementstext"
+    ],
+    "extractSchema": {
+      "type": "object",
+      "properties": {
+        "program_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "requirement": {
+                "type": "string"
+              },
+              "fulfilling_classes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "class_name": {
+                      "type": "string"
+                    },
+                    "prerequisites": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "class_name"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "requirement"
+            ]
+          }
+        }
+      },
+      "required": [
+        "program_requirements"
+      ]
+    },
+    "extractPrompt": "Extract all program requirements, the classes that can fulfill these requirements, and the prerequisites for these classes. Some requirements can be filled by a variety of classes so account for that.",
+    "enableWebSearch": false,
+    "options": {
+      "onlyMainContent": false,
+      "parsePDF": true,
+      "stealthMode": false,
+      "excludeTags": [],
+      "includeTags": [],
+      "waitFor": "",
+      "timeout": "",
+      "maxAge": "2 days",
+      "ignoreSitemap": false,
+      "crawlEntireDomain": false,
+      "sitemap": "include",
+      "limit": "10",
+      "maxDepth": "",
+      "excludePaths": [],
+      "includePaths": [],
+      "includeSubdomains": false,
+      "search": "",
+      "scrapeContentFromSearchResults": true,
+      "timeBasedSearch": "",
+      "location": "",
+      "prompt": ""
+    },
+    "formats": [
+      "markdown"
+    ],
+    "sources": [
+      "web"
+    ],
+    "categories": [],
+    "jsonSchema": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "company_name": {
+          "type": "string"
+        },
+        "company_description": {
+          "type": "string"
+        }
+      }
+    },
+    "agent": {
+      "model": "FIRE-1"
+    },
+    "url": "",
+    "endpoint": "extract"
+  },
+  "status": "success",
+  "version": "Erv0BkwJ0Qn4PhP2agzec",
+  "data": {
+    "program_requirements": [
+      {
+        "requirement": "Universitywide Requirements",
+        "fulfilling_classes": []
+      },
+      {
+        "requirement": "NUpath Requirements",
+        "fulfilling_classes": []
+      },
+      {
+        "requirement": "Computer Science Overview",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 1200",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 1210",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Computer Science Fundamental Courses",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 1800 and CS 1802",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 2000 and CS 2001",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 2100 and CS 2101",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Computer Science Required Courses",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 3000",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 3100 and CS 3101",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 3650",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 3800",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4530 or CS 4535",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 3000",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Security Required Course (Complete one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CY 2550",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 3740",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4740",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Presentation Requirement (Complete one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "COMM 1112",
+            "prerequisites": []
+          },
+          {
+            "class_name": "COMM 1113",
+            "prerequisites": []
+          },
+          {
+            "class_name": "COMM 1210",
+            "prerequisites": []
+          },
+          {
+            "class_name": "COMM 1511",
+            "prerequisites": []
+          },
+          {
+            "class_name": "THTR 1125",
+            "prerequisites": []
+          },
+          {
+            "class_name": "THTR 1130",
+            "prerequisites": []
+          },
+          {
+            "class_name": "THTR 1180",
+            "prerequisites": []
+          },
+          {
+            "class_name": "THTR 2345",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Khoury Approved Electives (Complete 8 semester hours)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 2500 or higher, except CS 5010",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 2000 or higher, except CY 4930",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 2500 or higher, except DS 4900",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MKTG 4606",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Computer Science Concentrations (Pick one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "Artificial Intelligence",
+            "prerequisites": []
+          },
+          {
+            "class_name": "Foundations",
+            "prerequisites": []
+          },
+          {
+            "class_name": "Human-Centered Computing",
+            "prerequisites": []
+          },
+          {
+            "class_name": "Software",
+            "prerequisites": []
+          },
+          {
+            "class_name": "Systems",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Artificial Intelligence",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 4100",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 4400",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Artificial Intelligence (Complete two)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 4120",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4150",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4180",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4220",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4610",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4100",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 4420",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 4440",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Foundations (Complete two)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 2800 or CS 4820",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4805 or CS 4810",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Foundations (Complete two not already taken)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 3950 and CS 4950 and CS 4950",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4805",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4810",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4820",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4830",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4770",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Human-Centered Computing",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 2484",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 3484",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Human-Centered Computing (Complete two)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 4097",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4350",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4520",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4550",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 4200",
+            "prerequisites": []
+          },
+          {
+            "class_name": "HINF 5300",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Software",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 2800",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4400",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4700 or CS 4730",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Software (Complete one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 3520",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4410",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4520",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4550",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4700",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4730",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4820",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4830",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Systems (Complete one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 4700 or CS 4730",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Systems (Complete one not already taken)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CY 3740",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4740",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Concentration in Systems (Complete two not already taken)",
+        "fulfilling_classes": [
+          {
+            "class_name": "CS 3520",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4300",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4360",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4610",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4700",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CS 4730",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 3740",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4740",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4760",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Supporting Courses: Mathematics",
+        "fulfilling_classes": [
+          {
+            "class_name": "MATH 1341",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MATH 1365 or MATH 1465",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Supporting Courses: Computing and Social Issues (Complete one)",
+        "fulfilling_classes": [
+          {
+            "class_name": "AFCS 2600",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 4170",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CY 5240",
+            "prerequisites": []
+          },
+          {
+            "class_name": "DS 1300 or PHIL 1300",
+            "prerequisites": []
+          },
+          {
+            "class_name": "HIST 2220",
+            "prerequisites": []
+          },
+          {
+            "class_name": "INSH 2102",
+            "prerequisites": []
+          },
+          {
+            "class_name": "JRNL 3700",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHIL 1145",
+            "prerequisites": []
+          },
+          {
+            "class_name": "SOCL 1280",
+            "prerequisites": []
+          },
+          {
+            "class_name": "SOCL 2485",
+            "prerequisites": []
+          },
+          {
+            "class_name": "SOCL 4528",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Supporting Courses: Electrical Engineering",
+        "fulfilling_classes": [
+          {
+            "class_name": "EECE 2310 and EECE 2311",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Science Requirement (Complete any two courses and any required labs)",
+        "fulfilling_classes": [
+          {
+            "class_name": "BIOL 1111 and BIOL 1112",
+            "prerequisites": []
+          },
+          {
+            "class_name": "BIOL 1113 and BIOL 1114",
+            "prerequisites": []
+          },
+          {
+            "class_name": "BIOL 2301 and BIOL 2302",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CHEM 1161 and CHEM 1162",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CHEM 1211 and CHEM 1212 and CHEM 1213",
+            "prerequisites": []
+          },
+          {
+            "class_name": "CHEM 1214 and CHEM 1215 and CHEM 1216",
+            "prerequisites": []
+          },
+          {
+            "class_name": "ENVR 1200 and ENVR 1201",
+            "prerequisites": []
+          },
+          {
+            "class_name": "ENVR 2310 and ENVR 2311",
+            "prerequisites": []
+          },
+          {
+            "class_name": "ENVR 2340 and ENVR 2341",
+            "prerequisites": []
+          },
+          {
+            "class_name": "ENVR 3300 and ENVR 3301",
+            "prerequisites": []
+          },
+          {
+            "class_name": "ENVR 4500 and ENVR 4501",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MATH 1342",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MATH 2280",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MATH 2331",
+            "prerequisites": []
+          },
+          {
+            "class_name": "MATH 3081",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1145 and PHYS 1146",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1147 and PHYS 1148",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1151 and PHYS 1152 and PHYS 1153",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1155 and PHYS 1156 and PHYS 1157",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1161 and PHYS 1162 and PHYS 1163",
+            "prerequisites": []
+          },
+          {
+            "class_name": "PHYS 1165 and PHYS 1166 and PHYS 1167",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "College Writing",
+        "fulfilling_classes": [
+          {
+            "class_name": "ENGW 1111",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Advanced Writing in the Disciplines",
+        "fulfilling_classes": [
+          {
+            "class_name": "ENGW 3302 or ENGW 3315",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Required General Electives",
+        "fulfilling_classes": [
+          {
+            "class_name": "Complete 28 semester hours of general electives.",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Khoury College GPA Requirement",
+        "fulfilling_classes": [
+          {
+            "class_name": "Minimum cumulative 2.000 GPA required in all CS, CY, DS, and IS courses",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Computer Science Credit Requirement",
+        "fulfilling_classes": [
+          {
+            "class_name": "Complete 72 semester hours in the major.",
+            "prerequisites": []
+          }
+        ]
+      },
+      {
+        "requirement": "Program Requirement",
+        "fulfilling_classes": [
+          {
+            "class_name": "134 total semester hours required",
+            "prerequisites": []
+          }
+        ]
+      }
+    ]
+  },
+  "sources": {
+    "program_requirements[0]": [],
+    "program_requirements[1]": [],
+    "program_requirements[2]": [],
+    "program_requirements[3]": [],
+    "program_requirements[4]": [],
+    "program_requirements[5]": [],
+    "program_requirements[6]": [],
+    "program_requirements[7]": [],
+    "program_requirements[8]": [],
+    "program_requirements[9]": [],
+    "program_requirements[10]": [],
+    "program_requirements[11]": [],
+    "program_requirements[12]": [],
+    "program_requirements[13]": [],
+    "program_requirements[14]": [],
+    "program_requirements[15]": [],
+    "program_requirements[16]": [],
+    "program_requirements[17]": [],
+    "program_requirements[18]": [],
+    "program_requirements[19]": [],
+    "program_requirements[20]": [],
+    "program_requirements[21]": [],
+    "program_requirements[22]": [],
+    "program_requirements[23]": [],
+    "program_requirements[24]": [],
+    "program_requirements[25]": [],
+    "program_requirements[26]": [],
+    "program_requirements[27]": [],
+    "program_requirements[28]": [],
+    "program_requirements[29]": []
+  }
+}

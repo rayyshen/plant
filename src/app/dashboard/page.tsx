@@ -1,12 +1,17 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
+import { CreatePlanForm } from '@/components/CreatePlanForm';
+import { PlanList } from '@/components/PlanList';
+import { Plan } from '@/lib/types';
 
 export default function Dashboard() {
     const { user, logout } = useAuth();
     const router = useRouter();
+    const [showCreateForm, setShowCreateForm] = useState(false);
 
     const handleLogout = async () => {
         try {
@@ -16,6 +21,29 @@ export default function Dashboard() {
             console.error('Failed to logout:', error);
         }
     };
+
+    const handlePlanCreated = () => {
+        setShowCreateForm(false);
+        // The PlanList component will automatically refresh
+    };
+
+    const handlePlanSelect = (plan: Plan) => {
+        // Navigate to the plan detail page
+        router.push(`/dashboard/plans/${plan.id}`);
+    };
+
+    if (!user) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Please log in</h1>
+                    <Button onClick={() => router.push('/login')}>
+                        Go to Login
+                    </Button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -29,7 +57,7 @@ export default function Dashboard() {
                         </div>
                         <div className="flex items-center space-x-4">
                             <span className="text-sm text-gray-700">
-                                Welcome, {user?.email}
+                                Welcome, {user.email}
                             </span>
                             <Button
                                 onClick={handleLogout}
@@ -45,22 +73,35 @@ export default function Dashboard() {
 
             <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <div className="px-4 py-6 sm:px-0">
-                    <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-                        <div className="text-center">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                                Welcome to Your Course Planner
-                            </h2>
-                            <p className="text-gray-600 mb-6">
-                                Your personalized course planning dashboard is coming soon!
-                            </p>
-                            <div className="space-y-2 text-sm text-gray-500">
-                                <p>• AI-powered course recommendations</p>
-                                <p>• Major requirement tracking</p>
-                                <p>• Career goal alignment</p>
-                                <p>• Semester planning tools</p>
-                            </div>
+                    <div className="mb-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-3xl font-bold text-gray-900">Dashboard</h2>
+                            <Button
+                                onClick={() => setShowCreateForm(true)}
+                                className="bg-blue-600 hover:bg-blue-700"
+                            >
+                                Create New Plan
+                            </Button>
                         </div>
+                        <p className="text-gray-600">
+                            Manage your academic plans and track your progress towards graduation.
+                        </p>
                     </div>
+
+                    {showCreateForm ? (
+                        <div className="mb-8">
+                            <CreatePlanForm
+                                userId={user.uid}
+                                onPlanCreated={handlePlanCreated}
+                                onCancel={() => setShowCreateForm(false)}
+                            />
+                        </div>
+                    ) : (
+                        <PlanList
+                            userId={user.uid}
+                            onPlanSelect={handlePlanSelect}
+                        />
+                    )}
                 </div>
             </main>
         </div>
