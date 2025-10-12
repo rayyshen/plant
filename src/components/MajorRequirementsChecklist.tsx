@@ -19,7 +19,9 @@ interface MajorRequirements {
     gpa_requirement: number | null;
     core_courses: MajorCourse[];
     supporting_courses: MajorCourse[];
-    [key: string]: any; // Allow additional categories
+    concentrations?: MajorCourse[];
+    nupath?: string[];
+    [key: string]: unknown; // Allow additional categories
 }
 
 interface MajorData {
@@ -55,10 +57,6 @@ export function MajorRequirementsChecklist({ plan, onUpdatePlan }: MajorRequirem
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [majorCode, setMajorCode] = useState<string | null>(null);
 
-    console.log('MajorRequirementsChecklist rendered with plan:', plan);
-    console.log('Plan major:', plan.major);
-    console.log('User:', user);
-    console.log('Completed courses from DB:', completedCourses);
 
     // Map plan major to major code
     useEffect(() => {
@@ -408,7 +406,7 @@ export function MajorRequirementsChecklist({ plan, onUpdatePlan }: MajorRequirem
                     </div>
                     <h3 className="text-lg font-medium text-gray-900 mb-2">Requirements Not Available</h3>
                     <p className="text-gray-500 mb-4">
-                        Requirements checklist is not available for "{plan.major}".
+                        Requirements checklist is not available for &quot;{plan.major}&quot;.
                         {majorCode ? ` (Code: ${majorCode})` : ' No matching major code found.'}
                     </p>
                     <p className="text-sm text-gray-400">
@@ -535,7 +533,6 @@ export function MajorRequirementsChecklist({ plan, onUpdatePlan }: MajorRequirem
                                         {category.courses.map((requirement, index) => {
                                             const isFulfilled = isRequirementFulfilled(requirement);
                                             const isPlanned = isCoursePlanned(requirement);
-                                            const completedCourses = getCompletedCoursesForRequirement(requirement);
 
                                             return (
                                                 <div

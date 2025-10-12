@@ -17,7 +17,7 @@ interface CSRequirements {
             description: string;
         };
     };
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 class DataCache {

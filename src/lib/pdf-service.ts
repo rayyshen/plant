@@ -1,5 +1,5 @@
 import jsPDF from 'jspdf';
-import { Plan, Semester, Course } from './types';
+import { Plan, Course } from './types';
 
 export class PDFService {
     static generatePlanPDF(plan: Plan): void {
@@ -94,7 +94,6 @@ export class PDFService {
             sum + semester.courses.filter(course => course.completed).length, 0);
 
         // Create a grid for statistics
-        const statsY = yPosition;
         addText(`Total Credits: ${totalCredits}`, 12, true, '#27ae60');
         addText(`Total Courses: ${totalCourses}`, 12, true, '#3498db');
         addText(`Completed: ${completedCourses}`, 12, true, '#27ae60');
@@ -119,7 +118,7 @@ export class PDFService {
             addText(`Credits: ${semester.credits} • Courses: ${semester.courses.length}`, 10, false, '#7f8c8d');
 
             if (semester.courses.length > 0) {
-                semester.courses.forEach((course, courseIndex) => {
+                semester.courses.forEach((course) => {
                     if (yPosition > pageHeight - 30) {
                         doc.addPage();
                         yPosition = margin;
@@ -151,7 +150,7 @@ export class PDFService {
 
         allCourses.sort((a, b) => a.code.localeCompare(b.code));
 
-        allCourses.forEach((course, index) => {
+        allCourses.forEach((course) => {
             if (yPosition > pageHeight - 20) {
                 doc.addPage();
                 yPosition = margin;

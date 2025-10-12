@@ -211,7 +211,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "The degree planner provided by the school sucks! Plant is a life saver. I'm graduating on time!,"
+                &quot;The degree planner provided by the school sucks! Plant is a life saver. I&apos;m graduating on time!&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3">
@@ -231,7 +231,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "Why does Northeastern even make these degree planners? Just let Ray, Raymond, and Jackson do it! Lmao!!"
+                &quot;Why does Northeastern even make these degree planners? Just let Ray, Raymond, and Jackson do it! Lmao!!&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center mr-3">
@@ -251,7 +251,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-muted-foreground mb-4 italic">
-                "I was going to flunk out of this school but Plant saved me. I'm only graduating 3 years late!"
+                &quot;I was going to flunk out of this school but Plant saved me. I&apos;m only graduating 3 years late!&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center mr-3">
@@ -310,7 +310,7 @@ export default function Home() {
             Ready to Plant the Seeds of Success?
           </h2>
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Join thousands of students who are already growing smarter with Plant's intelligent planning tools.
+            Join thousands of students who are already growing smarter with Plant&apos;s intelligent planning tools.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup">

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import PDFUpload from '@/components/PDFUpload';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Sprout } from 'lucide-react';
 
@@ -16,12 +16,12 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [parsedCourses, setParsedCourses] = useState<any[]>([]);
+    const [parsedCourses, setParsedCourses] = useState<unknown[]>([]);
     const [isParsingCourses, setIsParsingCourses] = useState(false);
     const { signUp } = useAuth();
     const router = useRouter();
 
-    const handleCoursesParsed = (courses: any[]) => {
+    const handleCoursesParsed = (courses: unknown[]) => {
         setParsedCourses(courses);
         setIsParsingCourses(false);
     };
@@ -69,8 +69,9 @@ export default function SignUp() {
             }
 
             router.push('/dashboard');
-        } catch (error: any) {
-            setError(error.message);
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

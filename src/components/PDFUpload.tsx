@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface PDFUploadProps {
-    onCoursesParsed: (courses: any[]) => void;
+    onCoursesParsed: (courses: unknown[]) => void;
     onError: (error: string) => void;
     isLoading: boolean;
 }
@@ -73,8 +73,9 @@ export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUp
             }
 
             onCoursesParsed(data.courses);
-        } catch (error: any) {
-            onError(error.message || 'Failed to upload and parse PDF');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to upload and parse PDF';
+            onError(errorMessage);
         }
     };
 

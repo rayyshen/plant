@@ -25,7 +25,7 @@ export default function PlanPage({ params }: PlanPageProps) {
     const [plan, setPlan] = useState<Plan | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [isSaving, setIsSaving] = useState(false);
+    const [, setIsSaving] = useState(false);
 
     const resolvedParams = use(params);
     const planId = resolvedParams.slug;

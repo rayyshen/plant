@@ -30,7 +30,7 @@ interface CSRequirementsData {
         };
     };
     NUPath?: NUPathData;
-    [key: string]: any; // Allow any additional properties
+    [key: string]: unknown; // Allow any additional properties
 }
 
 interface RequirementCategory {
@@ -641,7 +641,6 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
                                             category.requirements.map((requirement, index) => {
                                                 const isFulfilled = isRequirementFulfilled(requirement);
                                                 const isPlanned = isCoursePlanned(requirement);
-                                                const completedCourses = getCompletedCoursesForRequirement(requirement);
 
                                                 // Determine if this requirement is needed based on how many are already fulfilled
                                                 const fulfilledCount = category.requirements.slice(0, index + 1).filter(isRequirementFulfilled).length;
