@@ -8,6 +8,7 @@ import { PlanService } from '@/lib/plan-service';
 import { Plan } from '@/lib/types';
 import { SemesterPlan } from '@/components/SemesterPlan';
 import { CSRequirementsChecklist } from '@/components/CSRequirementsChecklist';
+import { MajorRequirementsChecklist } from '@/components/MajorRequirementsChecklist';
 import { Chatbot } from '@/components/Chatbot';
 import { Sprout } from 'lucide-react';
 
@@ -320,12 +321,10 @@ export default function PlanPage({ params }: PlanPageProps) {
                                     onUpdatePlan={handleUpdatePlan}
                                 />
                             ) : (
-                                <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6">
-                                    <h2 className="text-xl font-bold text-foreground mb-4">Requirements Checklist</h2>
-                                    <p className="text-muted-foreground">
-                                        Requirements checklist is currently only available for Computer Science majors.
-                                    </p>
-                                </div>
+                                <MajorRequirementsChecklist
+                                    plan={plan!}
+                                    onUpdatePlan={handleUpdatePlan}
+                                />
                             )}
                         </div>
 
