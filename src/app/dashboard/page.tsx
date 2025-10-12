@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { CreatePlanForm } from '@/components/CreatePlanForm';
 import { PlanList } from '@/components/PlanList';
 import { Plan } from '@/lib/types';
+import { Sprout } from 'lucide-react';
 
 export default function Dashboard() {
     const { user, logout } = useAuth();
@@ -34,10 +35,13 @@ export default function Dashboard() {
 
     if (!user) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen plant-gradient flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Please log in</h1>
-                    <Button onClick={() => router.push('/login')}>
+                    <div className="w-16 h-16 bg-primary/10 organic-rounded flex items-center justify-center mx-auto mb-4">
+                        <Sprout className="w-8 h-8 text-primary" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-4">Please log in</h1>
+                    <Button onClick={() => router.push('/login')} className="organic-rounded-sm">
                         Go to Login
                     </Button>
                 </div>
@@ -46,23 +50,28 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <nav className="bg-white shadow">
+        <div className="min-h-screen plant-gradient">
+            <nav className="bg-card/80 backdrop-blur-sm border-b border-border/50 leaf-shadow">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
-                            <h1 className="text-xl font-semibold text-gray-900">
-                                Northeastern Course Planner
-                            </h1>
+                            <div className="flex items-center space-x-2">
+                                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                    <Sprout className="w-5 h-5 text-primary-foreground" />
+                                </div>
+                                <h1 className="text-xl font-semibold text-primary">
+                                    Plant
+                                </h1>
+                            </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <span className="text-sm text-gray-700">
+                            <span className="text-sm text-muted-foreground">
                                 Welcome, {user.email}
                             </span>
                             <Button
                                 onClick={handleLogout}
                                 variant="outline"
-                                className="text-sm"
+                                className="text-sm organic-rounded-sm"
                             >
                                 Logout
                             </Button>
@@ -75,32 +84,38 @@ export default function Dashboard() {
                 <div className="px-4 py-6 sm:px-0">
                     <div className="mb-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-3xl font-bold text-gray-900">Dashboard</h2>
+                            <div>
+                                <h2 className="text-3xl font-bold text-foreground">Your Garden</h2>
+                                <p className="text-muted-foreground mt-1">
+                                    Cultivate your academic plans and watch them grow
+                                </p>
+                            </div>
                             <Button
                                 onClick={() => setShowCreateForm(true)}
-                                className="bg-blue-600 hover:bg-blue-700"
+                                className="organic-rounded-sm plant-grow"
                             >
-                                Create New Plan
+                                Plant New Plan
                             </Button>
                         </div>
-                        <p className="text-gray-600">
-                            Manage your academic plans and track your progress towards graduation.
-                        </p>
                     </div>
 
                     {showCreateForm ? (
                         <div className="mb-8">
-                            <CreatePlanForm
-                                userId={user.uid}
-                                onPlanCreated={handlePlanCreated}
-                                onCancel={() => setShowCreateForm(false)}
-                            />
+                            <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6">
+                                <CreatePlanForm
+                                    userId={user.uid}
+                                    onPlanCreated={handlePlanCreated}
+                                    onCancel={() => setShowCreateForm(false)}
+                                />
+                            </div>
                         </div>
                     ) : (
-                        <PlanList
-                            userId={user.uid}
-                            onPlanSelect={handlePlanSelect}
-                        />
+                        <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6">
+                            <PlanList
+                                userId={user.uid}
+                                onPlanSelect={handlePlanSelect}
+                            />
+                        </div>
                     )}
                 </div>
             </main>

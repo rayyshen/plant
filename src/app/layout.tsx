@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Northeastern Course Planner",
-  description: "Personalized course planner for Northeastern University students",
+  title: "Plant - Academic Growth Planner",
+  description: "Cultivate your academic journey with Plant - the intelligent course planning platform that helps you grow and thrive in your studies",
 };
 
 export default function RootLayout({

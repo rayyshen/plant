@@ -8,6 +8,7 @@ import { PlanService } from '@/lib/plan-service';
 import { Plan } from '@/lib/types';
 import { SemesterPlan } from '@/components/SemesterPlan';
 import { CSRequirementsChecklist } from '@/components/CSRequirementsChecklist';
+import { Sprout } from 'lucide-react';
 
 interface PlanPageProps {
     params: Promise<{
@@ -113,10 +114,13 @@ export default function PlanPage({ params }: PlanPageProps) {
 
     if (!user) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen plant-gradient flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Please log in</h1>
-                    <Button onClick={() => router.push('/login')}>
+                    <div className="w-16 h-16 bg-primary/10 organic-rounded flex items-center justify-center mx-auto mb-4">
+                        <Sprout className="w-8 h-8 text-primary" />
+                    </div>
+                    <h1 className="text-2xl font-bold text-foreground mb-4">Please log in</h1>
+                    <Button onClick={() => router.push('/login')} className="organic-rounded-sm">
                         Go to Login
                     </Button>
                 </div>
@@ -126,21 +130,26 @@ export default function PlanPage({ params }: PlanPageProps) {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50">
-                <nav className="bg-white shadow">
+            <div className="min-h-screen plant-gradient">
+                <nav className="bg-card/80 backdrop-blur-sm border-b border-border/50 leaf-shadow">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between h-16">
                             <div className="flex items-center">
                                 <Button
                                     onClick={handleBackToDashboard}
                                     variant="outline"
-                                    className="mr-4"
+                                    className="mr-4 organic-rounded-sm"
                                 >
-                                    ← Back to Dashboard
+                                    ← Back to Garden
                                 </Button>
-                                <h1 className="text-xl font-semibold text-gray-900">
-                                    Northeastern Course Planner
-                                </h1>
+                                <div className="flex items-center space-x-2">
+                                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                        <Sprout className="w-5 h-5 text-primary-foreground" />
+                                    </div>
+                                    <h1 className="text-xl font-semibold text-primary">
+                                        Plant
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,7 +157,10 @@ export default function PlanPage({ params }: PlanPageProps) {
                 <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                     <div className="px-4 py-6 sm:px-0">
                         <div className="flex items-center justify-center h-64">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                            <div className="text-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-2"></div>
+                                <p className="text-muted-foreground">Growing your plan...</p>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -238,24 +250,29 @@ export default function PlanPage({ params }: PlanPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <nav className="bg-white shadow">
+        <div className="min-h-screen plant-gradient">
+            <nav className="bg-card/80 backdrop-blur-sm border-b border-border/50 leaf-shadow">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
                             <Button
                                 onClick={handleBackToDashboard}
                                 variant="outline"
-                                className="mr-4"
+                                className="mr-4 organic-rounded-sm"
                             >
-                                ← Back to Dashboard
+                                ← Back to Garden
                             </Button>
-                            <h1 className="text-xl font-semibold text-gray-900">
-                                Northeastern Course Planner
-                            </h1>
+                            <div className="flex items-center space-x-2">
+                                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                    <Sprout className="w-5 h-5 text-primary-foreground" />
+                                </div>
+                                <h1 className="text-xl font-semibold text-primary">
+                                    Plant
+                                </h1>
+                            </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <span className="text-sm text-gray-700">
+                            <span className="text-sm text-muted-foreground">
                                 Welcome, {user.email}
                             </span>
                         </div>
@@ -266,17 +283,17 @@ export default function PlanPage({ params }: PlanPageProps) {
             <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <div className="px-4 py-6 sm:px-0">
                     {/* Plan Header */}
-                    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6 mb-6">
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex-1">
-                                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                                <h1 className="text-3xl font-bold text-foreground mb-2">
                                     {plan.title}
                                 </h1>
-                                <p className="text-lg text-gray-600 mb-2">
+                                <p className="text-lg text-muted-foreground mb-2">
                                     {plan.major} • {plan.careerGoal || 'No career goal specified'}
                                 </p>
                                 {plan.description && (
-                                    <p className="text-gray-700 mb-4">{plan.description}</p>
+                                    <p className="text-muted-foreground mb-4">{plan.description}</p>
                                 )}
                             </div>
                             <div className="flex items-center space-x-2">
@@ -286,9 +303,9 @@ export default function PlanPage({ params }: PlanPageProps) {
                             </div>
                         </div>
 
-                        <div className="flex justify-between items-center text-sm text-gray-500">
-                            <span>Created: {formatDate(plan.createdAt)}</span>
-                            <span>Last Updated: {formatDate(plan.updatedAt)}</span>
+                        <div className="flex justify-between items-center text-sm text-muted-foreground">
+                            <span>Planted: {formatDate(plan.createdAt)}</span>
+                            <span>Last tended: {formatDate(plan.updatedAt)}</span>
                         </div>
                     </div>
 
@@ -302,9 +319,9 @@ export default function PlanPage({ params }: PlanPageProps) {
                                     onUpdatePlan={handleUpdatePlan}
                                 />
                             ) : (
-                                <div className="bg-white rounded-lg shadow-md p-6">
-                                    <h2 className="text-xl font-bold text-gray-900 mb-4">Requirements Checklist</h2>
-                                    <p className="text-gray-600">
+                                <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6">
+                                    <h2 className="text-xl font-bold text-foreground mb-4">Requirements Checklist</h2>
+                                    <p className="text-muted-foreground">
                                         Requirements checklist is currently only available for Computer Science majors.
                                     </p>
                                 </div>
@@ -313,7 +330,7 @@ export default function PlanPage({ params }: PlanPageProps) {
 
                         {/* Right Column - Semester Planning */}
                         <div className="lg:col-span-2">
-                            <div className="bg-white rounded-lg shadow-md p-6">
+                            <div className="bg-card/80 backdrop-blur-sm organic-rounded-sm leaf-shadow p-6">
                                 <SemesterPlan
                                     plan={plan}
                                     onUpdatePlan={handleUpdatePlan}

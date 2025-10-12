@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
+import { Sprout } from 'lucide-react';
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -18,10 +19,10 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center plant-gradient">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto leaf-float"></div>
+          <p className="mt-4 text-muted-foreground">Growing your experience...</p>
         </div>
       </div>
     );
@@ -32,22 +33,27 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
+    <div className="min-h-screen plant-gradient">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-card/80 backdrop-blur-sm border-b border-border/50 leaf-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-indigo-600">
-                Northeastern Course Planner
-              </h1>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                  <Sprout className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <h1 className="text-xl font-bold text-primary">
+                  Plant
+                </h1>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <Link href="/login">
-                <Button variant="ghost">Sign In</Button>
+                <Button variant="ghost" className="hover:bg-accent/50">Sign In</Button>
               </Link>
               <Link href="/signup">
-                <Button>Get Started</Button>
+                <Button className="organic-rounded-sm">Start Growing</Button>
               </Link>
             </div>
           </div>
@@ -57,22 +63,27 @@ export default function Home() {
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Plan Your Academic Journey
-            <span className="block text-indigo-600">with AI-Powered Insights</span>
+          <div className="mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6 leaf-float">
+              <Sprout className="w-10 h-10 text-primary" />
+            </div>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+            Cultivate Your Academic Journey
+            <span className="block text-primary">with Intelligent Growth</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Northeastern Course Planner helps you choose the perfect classes each semester
-            with personalized recommendations based on your major, career goals, and academic progress.
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Plant helps you grow and thrive in your studies with personalized course recommendations,
+            smart planning tools, and AI-powered insights that nurture your academic success.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup">
-              <Button size="lg" className="text-lg px-8 py-3">
-                Start Planning Today
+              <Button size="lg" className="text-lg px-8 py-3 organic-rounded-sm plant-grow plant-hover">
+                Start Growing Today
               </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" size="lg" className="text-lg px-8 py-3">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-3 organic-rounded-sm plant-hover">
                 Sign In
               </Button>
             </Link>
@@ -81,63 +92,55 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="bg-white py-20">
+      <div className="bg-card/50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose Our Course Planner?
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Why Choose Plant?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Built specifically for Northeastern students with cutting-edge AI technology
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Built with nature-inspired design and cutting-edge AI technology to help you flourish
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+            <div className="text-center plant-grow plant-hover">
+              <div className="bg-primary/10 w-16 h-16 organic-rounded flex items-center justify-center mx-auto mb-4 leaf-shadow leaf-sway">
+                <div className="text-2xl">🌱</div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">AI Recommendations</h3>
-              <p className="text-gray-600">
-                Get personalized course suggestions powered by Gemini AI based on your academic profile
+              <h3 className="text-xl font-semibold text-foreground mb-2">Smart Growth</h3>
+              <p className="text-muted-foreground">
+                AI-powered recommendations that adapt to your learning style and academic goals
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+            <div className="text-center plant-grow plant-hover">
+              <div className="bg-primary/10 w-16 h-16 organic-rounded flex items-center justify-center mx-auto mb-4 leaf-shadow leaf-sway">
+                <div className="text-2xl">🌿</div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Major Tracking</h3>
-              <p className="text-gray-600">
-                Track your progress toward graduation with real-time major requirement monitoring
+              <h3 className="text-xl font-semibold text-foreground mb-2">Root Tracking</h3>
+              <p className="text-muted-foreground">
+                Monitor your progress toward graduation with real-time requirement tracking
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            <div className="text-center plant-grow plant-hover">
+              <div className="bg-primary/10 w-16 h-16 organic-rounded flex items-center justify-center mx-auto mb-4 leaf-shadow leaf-sway">
+                <div className="text-2xl">🌸</div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Career Alignment</h3>
-              <p className="text-gray-600">
-                Align your course choices with your future career goals and industry demands
+              <h3 className="text-xl font-semibold text-foreground mb-2">Career Bloom</h3>
+              <p className="text-muted-foreground">
+                Align your studies with future career opportunities and industry growth
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
+            <div className="text-center plant-grow plant-hover">
+              <div className="bg-primary/10 w-16 h-16 organic-rounded flex items-center justify-center mx-auto mb-4 leaf-shadow leaf-sway">
+                <div className="text-2xl">🌳</div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Semester Planning</h3>
-              <p className="text-gray-600">
-                Plan your entire academic journey with semester-by-semester course scheduling
+              <h3 className="text-xl font-semibold text-foreground mb-2">Seasonal Planning</h3>
+              <p className="text-muted-foreground">
+                Plan your academic seasons with semester-by-semester course cultivation
               </p>
             </div>
           </div>
@@ -145,32 +148,37 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-indigo-600 py-16">
+      <div className="bg-primary py-16 leaf-shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Transform Your Academic Planning?
+          <h2 className="text-3xl font-bold text-primary-foreground mb-4">
+            Ready to Plant the Seeds of Success?
           </h2>
-          <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of Northeastern students who are already planning smarter with AI-powered insights.
+          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            Join thousands of students who are already growing smarter with Plant's intelligent planning tools.
           </p>
           <Link href="/signup">
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-3">
-              Get Started Free
+            <Button size="lg" variant="secondary" className="text-lg px-8 py-3 organic-rounded-sm plant-hover">
+              Start Your Growth Journey 🌱
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-card py-12 border-t border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h3 className="text-xl font-bold mb-4">Northeastern Course Planner</h3>
-            <p className="text-gray-400 mb-4">
-              Empowering Northeastern students with intelligent course planning
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                <Sprout className="w-4 h-4 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold text-primary">Plant</h3>
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Cultivating academic success through intelligent planning
             </p>
-            <p className="text-sm text-gray-500">
-              © 2024 Northeastern Course Planner. Built for Northeastern University students.
+            <p className="text-sm text-muted-foreground/70">
+              © 2024 Plant. Nurturing your educational journey.
             </p>
           </div>
         </div>

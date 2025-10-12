@@ -68,10 +68,10 @@ function CourseItem({ course, onRemove, onEdit, onToggleCompletion, isDragging }
             style={style}
             {...attributes}
             {...listeners}
-            className={`flex justify-between items-center p-3 rounded-lg cursor-move transition-colors ${course.completed
-                ? 'bg-green-50 border border-green-200 hover:bg-green-100'
-                : 'bg-gray-50 hover:bg-gray-100'
-                } ${isDragging ? 'shadow-lg' : ''}`}
+            className={`flex justify-between items-center p-3 organic-rounded-sm cursor-move transition-all duration-200 ${course.completed
+                ? 'bg-primary/10 border border-primary/20 hover:bg-primary/15'
+                : 'bg-card/50 hover:bg-card/80'
+                } ${isDragging ? 'leaf-shadow-lg' : 'leaf-shadow'}`}
         >
             <div className="flex-1">
                 <div className="flex items-center space-x-3">
@@ -80,9 +80,9 @@ function CourseItem({ course, onRemove, onEdit, onToggleCompletion, isDragging }
                             e.stopPropagation();
                             onToggleCompletion(course.id);
                         }}
-                        className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${course.completed
-                            ? 'bg-green-500 border-green-500 text-white'
-                            : 'border-gray-300 hover:border-green-500'
+                        className={`w-5 h-5 organic-rounded-sm border-2 flex items-center justify-center transition-colors ${course.completed
+                            ? 'bg-primary border-primary text-primary-foreground'
+                            : 'border-border hover:border-primary'
                             }`}
                     >
                         {course.completed && (
@@ -93,18 +93,18 @@ function CourseItem({ course, onRemove, onEdit, onToggleCompletion, isDragging }
                     </button>
                     <div className="flex-1">
                         <div className="flex items-center space-x-2">
-                            <span className={`font-medium ${course.completed ? 'text-green-800 line-through' : 'text-gray-900'}`}>
+                            <span className={`font-medium ${course.completed ? 'text-primary line-through' : 'text-foreground'}`}>
                                 {course.code}
                             </span>
-                            <span className={`${course.completed ? 'text-green-700 line-through' : 'text-gray-600'}`}>
+                            <span className={`${course.completed ? 'text-primary/80 line-through' : 'text-muted-foreground'}`}>
                                 {course.name}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-muted-foreground">
                                 ({course.credits} credits)
                             </span>
                         </div>
                         {course.prerequisites.length > 0 && (
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm text-muted-foreground mt-1">
                                 Prerequisites: {course.prerequisites.join(', ')}
                             </p>
                         )}
@@ -231,7 +231,7 @@ export function SemesterCard({
     return (
         <div
             ref={setDroppableRef}
-            className={`border border-gray-200 rounded-lg p-4 bg-white shadow-sm transition-colors ${isOver ? 'border-blue-400 bg-blue-50' : ''
+            className={`border border-border organic-rounded-sm p-6 bg-card/80 backdrop-blur-sm leaf-shadow transition-all duration-200 ${isOver ? 'border-primary bg-primary/5' : ''
                 }`}
         >
             <div className="flex justify-between items-center mb-4">
@@ -243,7 +243,7 @@ export function SemesterCard({
                             onChange={(e) => setEditingName(e.target.value)}
                             onKeyDown={handleKeyDown}
                             onBlur={handleSaveRename}
-                            className="text-lg font-semibold text-gray-900 bg-transparent border-b border-blue-500 focus:outline-none focus:border-blue-700 px-1 py-1"
+                            className="text-lg font-semibold text-foreground bg-transparent border-b border-primary focus:outline-none focus:border-primary px-1 py-1"
                             autoFocus
                         />
                         <div className="flex space-x-1">
@@ -267,7 +267,7 @@ export function SemesterCard({
                     </div>
                 ) : (
                     <div className="flex items-center space-x-2 flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-lg font-semibold text-foreground">
                             {semester.name}
                         </h3>
                         <Button
@@ -281,7 +281,7 @@ export function SemesterCard({
                     </div>
                 )}
                 <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-muted-foreground">
                         {semester.credits} credits
                     </span>
                     <Button
@@ -289,7 +289,7 @@ export function SemesterCard({
                         variant="outline"
                         onClick={() => setShowAddCourse(!showAddCourse)}
                     >
-                        {showAddCourse ? 'Cancel' : '+ Add Course'}
+                        {showAddCourse ? 'Cancel' : '+ Plant Course'}
                     </Button>
                     <Button
                         size="sm"

@@ -44,79 +44,214 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.75rem;
+  --background: oklch(0.98 0.01 120);
+  --foreground: oklch(0.15 0.02 140);
+  --card: oklch(0.99 0.005 120);
+  --card-foreground: oklch(0.15 0.02 140);
+  --popover: oklch(0.99 0.005 120);
+  --popover-foreground: oklch(0.15 0.02 140);
+  --primary: oklch(0.65 0.12 140);
+  --primary-foreground: oklch(0.98 0.01 120);
+  --secondary: oklch(0.92 0.03 120);
+  --secondary-foreground: oklch(0.25 0.03 140);
+  --muted: oklch(0.92 0.03 120);
+  --muted-foreground: oklch(0.45 0.04 140);
+  --accent: oklch(0.88 0.05 120);
+  --accent-foreground: oklch(0.25 0.03 140);
+  --destructive: oklch(0.55 0.15 25);
+  --border: oklch(0.90 0.02 120);
+  --input: oklch(0.90 0.02 120);
+  --ring: oklch(0.65 0.12 140);
+  --chart-1: oklch(0.70 0.15 140);
+  --chart-2: oklch(0.75 0.12 160);
+  --chart-3: oklch(0.80 0.10 100);
+  --chart-4: oklch(0.65 0.08 180);
+  --chart-5: oklch(0.70 0.06 200);
+  --sidebar: oklch(0.97 0.01 120);
+  --sidebar-foreground: oklch(0.15 0.02 140);
+  --sidebar-primary: oklch(0.65 0.12 140);
+  --sidebar-primary-foreground: oklch(0.98 0.01 120);
+  --sidebar-accent: oklch(0.92 0.03 120);
+  --sidebar-accent-foreground: oklch(0.25 0.03 140);
+  --sidebar-border: oklch(0.90 0.02 120);
+  --sidebar-ring: oklch(0.65 0.12 140);
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.12 0.02 140);
+  --foreground: oklch(0.95 0.01 120);
+  --card: oklch(0.18 0.03 140);
+  --card-foreground: oklch(0.95 0.01 120);
+  --popover: oklch(0.18 0.03 140);
+  --popover-foreground: oklch(0.95 0.01 120);
+  --primary: oklch(0.75 0.12 140);
+  --primary-foreground: oklch(0.12 0.02 140);
+  --secondary: oklch(0.25 0.03 140);
+  --secondary-foreground: oklch(0.90 0.01 120);
+  --muted: oklch(0.25 0.03 140);
+  --muted-foreground: oklch(0.60 0.04 140);
+  --accent: oklch(0.30 0.04 140);
+  --accent-foreground: oklch(0.90 0.01 120);
+  --destructive: oklch(0.60 0.15 25);
+  --border: oklch(0.30 0.04 140);
+  --input: oklch(0.30 0.04 140);
+  --ring: oklch(0.75 0.12 140);
+  --chart-1: oklch(0.70 0.15 140);
+  --chart-2: oklch(0.75 0.12 160);
+  --chart-3: oklch(0.80 0.10 100);
+  --chart-4: oklch(0.65 0.08 180);
+  --chart-5: oklch(0.70 0.06 200);
+  --sidebar: oklch(0.18 0.03 140);
+  --sidebar-foreground: oklch(0.95 0.01 120);
+  --sidebar-primary: oklch(0.75 0.12 140);
+  --sidebar-primary-foreground: oklch(0.12 0.02 140);
+  --sidebar-accent: oklch(0.25 0.03 140);
+  --sidebar-accent-foreground: oklch(0.90 0.01 120);
+  --sidebar-border: oklch(0.30 0.04 140);
+  --sidebar-ring: oklch(0.75 0.12 140);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+
+  /* Plant-themed gradients */
+  .plant-gradient {
+    background: linear-gradient(135deg, hsl(120, 20%, 95%) 0%, hsl(140, 25%, 90%) 100%);
+  }
+
+  .plant-gradient-dark {
+    background: linear-gradient(135deg, hsl(140, 15%, 15%) 0%, hsl(120, 20%, 20%) 100%);
+  }
+
+  /* Leaf-inspired shadows */
+  .leaf-shadow {
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.1), 0 2px 8px rgba(34, 197, 94, 0.05);
+  }
+
+  .leaf-shadow-lg {
+    box-shadow: 0 10px 40px rgba(34, 197, 94, 0.15), 0 4px 16px rgba(34, 197, 94, 0.1);
+  }
+
+  /* Organic rounded corners */
+  .organic-rounded {
+    border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+  }
+
+  .organic-rounded-sm {
+    border-radius: 1rem 0.25rem 1rem 0.25rem;
+  }
+
+  /* Plant-themed animations */
+  @keyframes leaf-float {
+
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-10px) rotate(2deg);
+    }
+  }
+
+  @keyframes plant-grow {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes leaf-sway {
+
+    0%,
+    100% {
+      transform: rotate(-2deg);
+    }
+
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+
+  @keyframes root-grow {
+    0% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+
+    100% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+
+  .leaf-float {
+    animation: leaf-float 3s ease-in-out infinite;
+  }
+
+  .plant-grow {
+    animation: plant-grow 0.6s ease-out;
+  }
+
+  .leaf-sway {
+    animation: leaf-sway 4s ease-in-out infinite;
+  }
+
+  .root-grow {
+    animation: root-grow 0.8s ease-out;
+  }
+
+  /* Enhanced focus states */
+  .plant-focus {
+    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200;
+  }
+
+  /* Plant-themed hover effects */
+  .plant-hover {
+    @apply hover:scale-105 hover:shadow-lg transition-all duration-300;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(120, 10%, 95%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(140, 20%, 70%);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(140, 25%, 60%);
+  }
+
+  /* Plant-themed selection */
+  ::selection {
+    background: hsl(140, 30%, 80%);
+    color: hsl(140, 50%, 20%);
+  }
+
+  /* Plant-themed focus ring */
+  .plant-focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2 focus:ring-offset-background;
   }
 }

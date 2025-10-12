@@ -6,6 +6,7 @@ import { AutocompleteDropdown, AutocompleteOption } from '@/components/ui/autoco
 import { PlanService } from '@/lib/plan-service';
 import { MajorsService } from '@/lib/majors-service';
 import { CreatePlanData } from '@/lib/types';
+import { Sprout } from 'lucide-react';
 
 interface CreatePlanFormProps {
     userId: string;
@@ -67,12 +68,18 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Create New Plan</h2>
+        <div className="space-y-6">
+            <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 organic-rounded flex items-center justify-center mx-auto mb-4">
+                    <Sprout className="w-6 h-6 text-primary" />
+                </div>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Plant New Plan</h2>
+                <p className="text-muted-foreground">Cultivate your academic journey with a personalized plan</p>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="title" className="block text-sm font-medium text-foreground mb-2">
                         Plan Title *
                     </label>
                     <input
@@ -82,13 +89,13 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
                         value={formData.title}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., Computer Science 4-Year Plan"
+                        className="w-full px-4 py-3 border border-border rounded-lg bg-background/50 text-foreground placeholder-muted-foreground plant-focus"
+                        placeholder="e.g., Computer Science Growth Plan"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="description" className="block text-sm font-medium text-foreground mb-2">
                         Description
                     </label>
                     <textarea
@@ -97,8 +104,8 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
                         value={formData.description}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Describe your academic goals and objectives..."
+                        className="w-full px-4 py-3 border border-border rounded-lg bg-background/50 text-foreground placeholder-muted-foreground plant-focus"
+                        placeholder="Describe your academic goals and how you want to grow..."
                     />
                 </div>
 
@@ -113,7 +120,7 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
                 />
 
                 <div>
-                    <label htmlFor="careerGoal" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="careerGoal" className="block text-sm font-medium text-foreground mb-2">
                         Career Goal
                     </label>
                     <input
@@ -122,14 +129,14 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
                         name="careerGoal"
                         value={formData.careerGoal}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-border rounded-lg bg-background/50 text-foreground placeholder-muted-foreground plant-focus"
                         placeholder="e.g., Software Engineer, Data Scientist, Product Manager"
                     />
                 </div>
 
                 {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-                        {error}
+                    <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                        <p className="text-sm text-destructive">{error}</p>
                     </div>
                 )}
 
@@ -139,15 +146,16 @@ export function CreatePlanForm({ userId, onPlanCreated, onCancel }: CreatePlanFo
                         variant="outline"
                         onClick={onCancel}
                         disabled={isLoading}
+                        className="organic-rounded-sm"
                     >
                         Cancel
                     </Button>
                     <Button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="organic-rounded-sm"
                     >
-                        {isLoading ? 'Creating...' : 'Create Plan'}
+                        {isLoading ? 'Planting...' : 'Plant Plan'}
                     </Button>
                 </div>
             </form>
