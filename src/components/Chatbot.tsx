@@ -55,9 +55,33 @@ export function Chatbot({ plan }: ChatbotProps) {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    // Get elective suggestions based on career goal
+    const getElectiveSuggestions = (careerGoal: string, major: string): string => {
+        if (!careerGoal || !coursesWithHardness.length) return '';
+
+        // Use the data cache helper function
+        const relevantElectives = dataCache.getElectivesByCareerGoal(careerGoal);
+
+        // Get top 5 electives with difficulty ratings
+        const topElectives = relevantElectives
+            .sort((a, b) => a.difficulty - b.difficulty) // Sort by difficulty (easier first)
+            .slice(0, 5);
+
+        if (topElectives.length === 0) return '';
+
+        const electiveList = topElectives.map(course =>
+            `• **${course.course_code}** - ${course.title} (Difficulty: ${course.difficulty}/5)`
+        ).join('\n');
+
+        return `\n\n**🌱 Elective Suggestions for "${careerGoal}":**\n${electiveList}\n\nThese electives align with your career goals and can help you develop relevant skills!`;
+    };
+
     // Initialize with welcome message
     useEffect(() => {
         if (isOpen && messages.length === 0) {
+            const careerGoal = plan.careerGoal?.trim();
+            const electiveSuggestions = careerGoal ? getElectiveSuggestions(careerGoal, plan.major) : '';
+
             const welcomeMessage: ChatMessage = {
                 id: 'welcome',
                 content: `Hi! I'm your **academic planning assistant**. I can help you with:
@@ -67,7 +91,7 @@ export function Chatbot({ plan }: ChatbotProps) {
 • **Balanced course loads** using difficulty ratings
 • **Career-focused** course recommendations
 
-I have access to your plan **"${plan.title}"** (${plan.major}) and your career goal: **"${plan.careerGoal || 'Not specified'}"**.
+I have access to your plan **"${plan.title}"** (${plan.major})${careerGoal ? ` and your career goal: **"${careerGoal}"**` : ''}.${electiveSuggestions}
 
 How can I help you today?`,
                 role: 'assistant',
@@ -75,7 +99,7 @@ How can I help you today?`,
             };
             setMessages([welcomeMessage]);
         }
-    }, [isOpen, plan.title, plan.major, plan.careerGoal]);
+    }, [isOpen, plan.title, plan.major, plan.careerGoal, coursesWithHardness]);
 
     const generateContext = () => {
         // Get completed courses
@@ -152,6 +176,8 @@ ${sampleCourses}
 - Include specific course codes with difficulty ratings when relevant
 - Focus on practical, immediate next steps
 - Consider course difficulty for balanced semester loads
+- When suggesting electives, prioritize courses that align with the student's career goal: "${plan.careerGoal || 'Not specified'}"
+- Always mention difficulty ratings (1-5 scale) when recommending courses
 
 Student Question: ${inputMessage}
 

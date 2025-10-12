@@ -109,6 +109,66 @@ class DataCache {
         );
     }
 
+    public getElectivesByCareerGoal(careerGoal: string): CourseWithHardness[] {
+        if (!this.coursesWithHardness || !careerGoal) return [];
+
+        const electives = this.coursesWithHardness.filter(course => course.elective);
+
+        // Map career goals to relevant elective categories
+        const careerMappings: { [key: string]: string[] } = {
+            'software engineer': ['CS', 'IS', 'CY', 'DS'],
+            'software engineering': ['CS', 'IS', 'CY', 'DS'],
+            'data scientist': ['DS', 'STAT', 'MATH', 'CS'],
+            'data science': ['DS', 'STAT', 'MATH', 'CS'],
+            'product manager': ['BUSN', 'ENTR', 'MKTG', 'COMM'],
+            'product management': ['BUSN', 'ENTR', 'MKTG', 'COMM'],
+            'cybersecurity': ['CY', 'CS', 'IS', 'CRIM'],
+            'cyber security': ['CY', 'CS', 'IS', 'CRIM'],
+            'machine learning': ['DS', 'CS', 'MATH', 'STAT'],
+            'ai': ['DS', 'CS', 'MATH', 'STAT'],
+            'artificial intelligence': ['DS', 'CS', 'MATH', 'STAT'],
+            'web developer': ['CS', 'IS', 'ARTG', 'COMM'],
+            'web development': ['CS', 'IS', 'ARTG', 'COMM'],
+            'mobile developer': ['CS', 'IS', 'ARTG'],
+            'mobile development': ['CS', 'IS', 'ARTG'],
+            'game developer': ['CS', 'ARTG', 'MUSI'],
+            'game development': ['CS', 'ARTG', 'MUSI'],
+            'devops': ['CS', 'IS', 'CY'],
+            'cloud engineer': ['CS', 'IS', 'CY'],
+            'full stack': ['CS', 'IS', 'ARTG'],
+            'frontend': ['CS', 'IS', 'ARTG'],
+            'backend': ['CS', 'IS', 'CY'],
+            'database': ['CS', 'IS', 'DS'],
+            'analyst': ['DS', 'STAT', 'BUSN', 'ECON'],
+            'consultant': ['BUSN', 'COMM', 'ECON', 'PSYC'],
+            'entrepreneur': ['ENTR', 'BUSN', 'MKTG', 'COMM'],
+            'startup': ['ENTR', 'BUSN', 'MKTG', 'COMM']
+        };
+
+        const careerLower = careerGoal.toLowerCase();
+        let relevantDepartments: string[] = [];
+
+        // Find matching departments based on career goal
+        for (const [keyword, departments] of Object.entries(careerMappings)) {
+            if (careerLower.includes(keyword)) {
+                relevantDepartments = departments;
+                break;
+            }
+        }
+
+        // If no specific match, suggest general electives
+        if (relevantDepartments.length === 0) {
+            relevantDepartments = ['CS', 'BUSN', 'COMM', 'PSYC', 'ECON'];
+        }
+
+        // Filter electives by relevant departments
+        return electives.filter(course =>
+            relevantDepartments.some(dept =>
+                course.department.toLowerCase().includes(dept.toLowerCase())
+            )
+        );
+    }
+
     public clearCache(): void {
         this.coursesWithHardness = null;
         this.csRequirements = null;
