@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import google.generativeai as genai
 
 # Configure your API key
-genai.configure(api_key="AIzaSyBWpnHeX-xn-GtBhFs9ldcA3hRteD05oe0")
+genai.configure(api_key="Key")
 
 # Load courses JSON
 with open("Data/all_courses_structured.json", "r") as f:
