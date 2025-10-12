@@ -98,8 +98,8 @@ export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUp
 
             <div
                 className={`border-2 border-dashed organic-rounded-sm p-6 text-center transition-all duration-200 ${dragActive
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border hover:border-primary/50 hover:bg-primary/5'
                     }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
