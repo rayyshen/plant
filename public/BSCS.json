@@ -41,7 +41,7 @@
       "description": "Natural science courses"
     },
     "Writing": {
-      "minRequired": 1,
+      "minRequired": 2,
       "description": "Writing and communication courses"
     }
   },

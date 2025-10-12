@@ -29,6 +29,17 @@ interface RequirementCategory {
     description: string;
 }
 
+interface CourseDetails {
+    course_code: string;
+    title: string;
+    description: string;
+    credits: string;
+    prerequisites: string | null;
+    attributes: string | null;
+    department: string;
+    elective: boolean;
+}
+
 interface CSRequirementsChecklistProps {
     plan: Plan;
     onUpdatePlan: (updatedPlan: Plan) => void;
@@ -40,6 +51,8 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
     const [completedCourses, setCompletedCourses] = useState<CompletedCourse[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+    const [selectedCourse, setSelectedCourse] = useState<CourseDetails | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     console.log('CSRequirementsChecklist rendered with plan:', plan);
     console.log('User:', user);
@@ -246,6 +259,37 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
         setExpandedCategories(newExpanded);
     };
 
+    // Fetch course details from structured data
+    const fetchCourseDetails = async (courseCode: string): Promise<CourseDetails | null> => {
+        try {
+            const response = await fetch('/all_courses_structured.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const courses: CourseDetails[] = await response.json();
+            const course = courses.find(c => c.course_code === courseCode);
+            return course || null;
+        } catch (error) {
+            console.error('Error fetching course details:', error);
+            return null;
+        }
+    };
+
+    // Handle double-click on course
+    const handleCourseDoubleClick = async (courseCode: string) => {
+        const courseDetails = await fetchCourseDetails(courseCode);
+        if (courseDetails) {
+            setSelectedCourse(courseDetails);
+            setIsModalOpen(true);
+        }
+    };
+
+    // Close modal
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedCourse(null);
+    };
+
     // Calculate progress for a category
     const getCategoryProgress = (requirements: CSRequirement[], minRequired: number) => {
         const fulfilled = requirements.filter(isRequirementFulfilled).length;
@@ -345,7 +389,7 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
     return (
         <div className="bg-white rounded-lg shadow-md p-6">
             <div className="mb-6">
-                <div className="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">
+                {/* <div className="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">
                     <strong>DEBUG:</strong> CSRequirementsChecklist component is rendering!
                     <br />Data: {requirementsData ? 'Loaded' : 'Not loaded'}, Loading: {isLoading ? 'Yes' : 'No'}
                     <br />User: {user ? user.email : 'Not logged in'}
@@ -372,7 +416,7 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
                     >
                         Test Course Matching
                     </button>
-                </div>
+                </div> */}
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Computer Science Requirements Checklist</h2>
                 <p className="text-gray-600 mb-4">
                     Track your progress toward completing the CS major requirements. Click on courses to mark them as completed.
@@ -466,46 +510,48 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
                                             return (
                                                 <div
                                                     key={requirement.code}
-                                                    className={`flex items-center justify-between p-3 rounded-lg border ${isFulfilled
+                                                    className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow ${isFulfilled
                                                         ? 'bg-green-50 border-green-200'
                                                         : isPlanned
                                                             ? 'bg-yellow-50 border-yellow-200'
                                                             : 'bg-gray-50 border-gray-200'
                                                         }`}
+                                                    onClick={() => handleCourseDoubleClick(requirement.code)}
                                                 >
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center space-x-3">
-                                                            <button
-                                                                onClick={() => toggleCourseCompletion(requirement.code)}
-                                                                className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${isFulfilled
-                                                                    ? 'bg-green-500 border-green-500 text-white'
-                                                                    : 'border-gray-300 hover:border-green-500'
-                                                                    }`}
-                                                            >
-                                                                {isFulfilled && (
-                                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                    </svg>
-                                                                )}
-                                                            </button>
-                                                            <div>
-                                                                <div className="flex items-center space-x-2">
-                                                                    <span className="font-medium text-gray-900">{requirement.code}</span>
-                                                                    <span className="text-gray-600">{requirement.name}</span>
-                                                                    <span className="text-sm text-gray-500">({requirement.creditHours} credits)</span>
-                                                                    {!isNeeded && (
-                                                                        <span className="text-xs text-gray-400 italic">(optional)</span>
-                                                                    )}
-                                                                </div>
-                                                                {requirement.prerequisites.length > 0 && (
-                                                                    <div className="text-xs text-gray-500 mt-1">
-                                                                        Prerequisites: {requirement.prerequisites.join(', ')}
-                                                                    </div>
+                                                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                toggleCourseCompletion(requirement.code);
+                                                            }}
+                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${isFulfilled
+                                                                ? 'bg-green-500 border-green-500 text-white'
+                                                                : 'border-gray-300 hover:border-green-500'
+                                                                }`}
+                                                        >
+                                                            {isFulfilled && (
+                                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                            )}
+                                                        </button>
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="font-bold text-gray-900 flex-shrink-0">{requirement.code}</span>
+                                                                <span className="text-gray-600 truncate">{requirement.name}</span>
+                                                                <span className="text-sm text-gray-500 flex-shrink-0">({requirement.creditHours} credits)</span>
+                                                                {!isNeeded && (
+                                                                    <span className="text-xs text-gray-400 italic flex-shrink-0">(optional)</span>
                                                                 )}
                                                             </div>
+                                                            {requirement.prerequisites.length > 0 && (
+                                                                <div className="text-xs text-gray-500 mt-1 truncate">
+                                                                    Prerequisites: {requirement.prerequisites.join(', ')}
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
-                                                    <div className="ml-4">
+                                                    <div className="ml-4 flex-shrink-0">
                                                         {isFulfilled ? (
                                                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                                 Completed
@@ -549,6 +595,78 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
                     </div>
                 </div>
             </div>
+
+            {/* Course Details Modal */}
+            {isModalOpen && selectedCourse && (
+                <div className="fixed inset-0 bg-transparent flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <div className="p-6">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-900">{selectedCourse.course_code}</h2>
+                                    <h3 className="text-lg text-gray-700 mt-1">{selectedCourse.title}</h3>
+                                </div>
+                                <button
+                                    onClick={closeModal}
+                                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="font-semibold text-gray-900 mb-2">Course Information</h4>
+                                    <div className="grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <span className="font-medium text-gray-700">Credits:</span>
+                                            <span className="ml-2 text-gray-600">{selectedCourse.credits}</span>
+                                        </div>
+                                        <div>
+                                            <span className="font-medium text-gray-700">Department:</span>
+                                            <span className="ml-2 text-gray-600">{selectedCourse.department}</span>
+                                        </div>
+                                        <div>
+                                            <span className="font-medium text-gray-700">Type:</span>
+                                            <span className="ml-2 text-gray-600">{selectedCourse.elective ? 'Elective' : 'Required'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {selectedCourse.prerequisites && (
+                                    <div>
+                                        <h4 className="font-semibold text-gray-900 mb-2">Prerequisites</h4>
+                                        <p className="text-gray-700">{selectedCourse.prerequisites}</p>
+                                    </div>
+                                )}
+
+                                {selectedCourse.attributes && (
+                                    <div>
+                                        <h4 className="font-semibold text-gray-900 mb-2">Attributes</h4>
+                                        <p className="text-gray-700">{selectedCourse.attributes}</p>
+                                    </div>
+                                )}
+
+                                <div>
+                                    <h4 className="font-semibold text-gray-900 mb-2">Description</h4>
+                                    <p className="text-gray-700 leading-relaxed">{selectedCourse.description}</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 flex justify-end">
+                                <button
+                                    onClick={closeModal}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

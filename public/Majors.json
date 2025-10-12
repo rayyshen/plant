@@ -243,7 +243,7 @@
         "school_name": "College of Engineering"
       },
       {
-        "area_name": "Computer Science*",
+        "area_name": "Computer Science",
         "school_name": "Khoury College of Computer Sciences"
       },
       {
@@ -271,7 +271,7 @@
         "school_name": "College of Arts, Media and Design"
       },
       {
-        "area_name": "Discover Oakland* (Interdisciplinary Studies)",
+        "area_name": "Discover Oakland (Interdisciplinary Studies)",
         "school_name": ""
       },
       {
@@ -301,10 +301,6 @@
       {
         "area_name": "Environmental Studies",
         "school_name": "College of Science"
-      },
-      {
-        "area_name": "Explore all 180+ combined majors!",
-        "school_name": "Combined Majors"
       },
       {
         "area_name": "Explore Program for undeclared students",

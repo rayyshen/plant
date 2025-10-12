@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import {
     DndContext,
     DragEndEvent,
-    DragOverEvent,
     DragOverlay,
     DragStartEvent,
     PointerSensor,
@@ -12,7 +11,6 @@ import {
     useSensors,
     closestCorners,
 } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { SemesterCard } from '@/components/SemesterCard';
 import { Button } from '@/components/ui/button';
 import { Plan, Course, Semester } from '@/lib/types';
@@ -28,6 +26,17 @@ interface CourseData {
     labHourLow: number | null;
     college: string;
     department: string;
+}
+
+interface StructuredCourseData {
+    course_code: string;
+    title: string;
+    description: string;
+    credits: string;
+    prerequisites: string | null;
+    attributes: string | null;
+    department: string;
+    elective: boolean;
 }
 
 interface SemesterPlanProps {
@@ -62,12 +71,36 @@ export function SemesterPlan({ plan, onUpdatePlan, onSavePlan }: SemesterPlanPro
         })
     );
 
-    // Load course options from clean_courses.json
+    // Load course options from all_courses_structured.json
     useEffect(() => {
         const loadCourses = async () => {
             try {
-                const response = await fetch('/clean_courses.json');
-                const courses: CourseData[] = await response.json();
+                const response = await fetch('/all_courses_structured.json');
+                const structuredCourses: StructuredCourseData[] = await response.json();
+
+                // Map structured course data to CourseData format
+                const courses: CourseData[] = structuredCourses.map((course, index) => {
+                    // Parse course code to extract subject and course number
+                    const courseCodeParts = course.course_code ? course.course_code.split(' ') : ['', ''];
+                    const [subject, courseNumber] = courseCodeParts;
+
+                    // Parse credits from string format like "3 Hours" to number
+                    const creditsMatch = course.credits ? course.credits.match(/(\d+)/) : null;
+                    const creditHourLow = creditsMatch ? parseInt(creditsMatch[1]) : 0;
+
+                    return {
+                        id: index + 1, // Generate sequential ID
+                        termEffective: '', // Not available in structured data
+                        subject: subject || '',
+                        courseNumber: courseNumber || '',
+                        courseTitle: course.title || '',
+                        courseDescription: course.description || '',
+                        creditHourLow: creditHourLow,
+                        labHourLow: null, // Not available in structured data
+                        college: course.department || '', // Using department as college
+                        department: course.department || ''
+                    };
+                });
 
                 const options = courses.map(course => ({
                     value: course.id.toString(),
