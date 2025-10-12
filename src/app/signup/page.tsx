@@ -31,6 +31,11 @@ export default function SignUp() {
         setIsParsingCourses(false);
     };
 
+    const handleStartParsing = () => {
+        setIsParsingCourses(true);
+        setError(''); // Clear any previous errors
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -153,6 +158,7 @@ export default function SignUp() {
                             <PDFUpload
                                 onCoursesParsed={handleCoursesParsed}
                                 onError={handleParseError}
+                                onStartParsing={handleStartParsing}
                                 isLoading={isParsingCourses}
                             />
                             {parsedCourses.length > 0 && (
@@ -160,6 +166,17 @@ export default function SignUp() {
                                     <p className="text-sm text-primary">
                                         🌱 Successfully planted {parsedCourses.length} completed courses!
                                     </p>
+                                </div>
+                            )}
+
+                            {isParsingCourses && (
+                                <div className="mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                                        <p className="text-sm text-primary">
+                                            🌱 Planting your courses... This may take a moment
+                                        </p>
+                                    </div>
                                 </div>
                             )}
                         </div>
