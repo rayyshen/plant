@@ -5,11 +5,11 @@
       "description": "First year seminar and professional development"
     },
     "CS_Fundamental": {
-      "minRequired": 2,
+      "minRequired": 6,
       "description": "Core computational thinking courses"
     },
     "CS_Required": {
-      "minRequired": 13,
+      "minRequired": 9,
       "description": "Essential computer science courses"
     },
     "Security_Requirement": {
@@ -77,40 +77,33 @@
       "prerequisites": [
         "CS 1800"
       ]
-    }
-  ],
-  "CS_Required": [
+    },
     {
       "code": "CS 2000",
-      "name": "Introduction to Computation II",
+      "name": "Introduction to Program Design and Implementation ",
       "creditHours": 4,
       "prerequisites": []
     },
     {
       "code": "CS 2001",
-      "name": "Introduction to Computation II Seminar",
-      "creditHours": 1,
-      "prerequisites": [
-        "CS 2000"
-      ]
+      "name": "Lab for CS 2000",
+      "creditHours": 4,
+      "prerequisites": []
     },
     {
       "code": "CS 2100",
-      "name": "Software Construction I",
+      "name": "Program Design and Implementation 1",
       "creditHours": 4,
-      "prerequisites": [
-        "CS 2000",
-        "CS 2500"
-      ]
+      "prerequisites": []
     },
     {
       "code": "CS 2101",
-      "name": "Software Construction I Seminar",
-      "creditHours": 1,
-      "prerequisites": [
-        "CS 2100"
-      ]
-    },
+      "name": "Lab for CS 2100",
+      "creditHours": 4,
+      "prerequisites": []
+    }
+  ],
+  "CS_Required": [
     {
       "code": "CS 3000",
       "name": "Algorithms",
@@ -738,5 +731,85 @@
         "ENGW 1114"
       ]
     }
-  ]
+  ],
+  "NUPath": {
+    "competencies": [
+      {
+        "code": "ND",
+        "name": "Engaging with the Natural & Designed World",
+        "fulfilledByCourses": [
+          "CS 2000",
+          "CS 2100",
+          "DS 3000"
+        ]
+      },
+      {
+        "code": "EI",
+        "name": "Exploring Creative Expression & Innovation",
+        "fulfilledByCourses": []
+      },
+      {
+        "code": "IC",
+        "name": "Interpreting Culture",
+        "fulfilledByCourses": []
+      },
+      {
+        "code": "FQ",
+        "name": "Conducting Formal & Quantitative Reasoning",
+        "fulfilledByCourses": [
+          "CS 1800",
+          "CS 2000",
+          "MATH 1341"
+        ]
+      },
+      {
+        "code": "SI",
+        "name": "Understanding Societies & Institutions",
+        "fulfilledByCourses": []
+      },
+      {
+        "code": "AD",
+        "name": "Analyzing & Using Data",
+        "fulfilledByCourses": [
+          "CS 2100",
+          "CS 3650",
+          "DS 3000"
+        ]
+      },
+      {
+        "code": "DD",
+        "name": "Engaging Difference & Diversity",
+        "fulfilledByCourses": []
+      },
+      {
+        "code": "ER",
+        "name": "Employing Ethical Reasoning",
+        "fulfilledByCourses": []
+      },
+      {
+        "code": "WF",
+        "name": "Writing in the First Year",
+        "fulfilledByCourses": [
+          "ENGW 1111"
+        ]
+      },
+      {
+        "code": "WD",
+        "name": "Advanced Writing in the Disciplines",
+        "fulfilledByCourses": [
+          "ENGW 3302",
+          "ENGW 3315"
+        ]
+      },
+      {
+        "code": "WI",
+        "name": "Writing Intensive in the Major",
+        "fulfilledByCourses": [
+          "CS 4100",
+          "CS 4530",
+          "CS 4535"
+        ]
+      }
+    ]
+  }
 }

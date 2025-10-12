@@ -12,6 +12,16 @@ interface CSRequirement {
     prerequisites: string[];
 }
 
+interface NUPathCompetency {
+    code: string;
+    name: string;
+    fulfilledByCourses: string[];
+}
+
+interface NUPathData {
+    competencies: NUPathCompetency[];
+}
+
 interface CSRequirementsData {
     requirements: {
         [key: string]: {
@@ -19,14 +29,17 @@ interface CSRequirementsData {
             description: string;
         };
     };
+    NUPath?: NUPathData;
     [key: string]: any; // Allow any additional properties
 }
 
 interface RequirementCategory {
     name: string;
     requirements: CSRequirement[];
+    competencies?: NUPathCompetency[]; // For NU Path categories
     minRequired: number;
     description: string;
+    isNUPath?: boolean;
 }
 
 interface CourseDetails {
@@ -195,6 +208,28 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
         return isFulfilled;
     };
 
+    // Check if a NU Path competency is fulfilled
+    const isNUPathCompetencyFulfilled = (competency: NUPathCompetency): boolean => {
+        const planCourses = getAllCourses();
+
+        // Check if any of the courses that fulfill this competency are completed
+        return competency.fulfilledByCourses.some(courseCode => {
+            const normalizedCourseCode = normalizeCourseCode(courseCode);
+
+            // Check plan courses
+            const planMatch = planCourses.some(course =>
+                course.code && normalizeCourseCode(course.code) === normalizedCourseCode && course.completed
+            );
+
+            // Check completed courses from database
+            const dbMatch = completedCourses.some(course =>
+                course.courseCode && normalizeCourseCode(course.courseCode) === normalizedCourseCode
+            );
+
+            return planMatch || dbMatch;
+        });
+    };
+
     // Get completed courses for a requirement
     const getCompletedCoursesForRequirement = (requirement: CSRequirement): (Course | CompletedCourse)[] => {
         if (!requirement.code) return [];
@@ -291,12 +326,22 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
     };
 
     // Calculate progress for a category
-    const getCategoryProgress = (requirements: CSRequirement[], minRequired: number) => {
-        const fulfilled = requirements.filter(isRequirementFulfilled).length;
-        const total = requirements.length;
-        const required = Math.min(fulfilled, minRequired); // Can't exceed the minimum required
-        const percentage = minRequired > 0 ? (required / minRequired) * 100 : 0;
-        return { fulfilled, total, required, minRequired, percentage };
+    const getCategoryProgress = (category: RequirementCategory) => {
+        if (category.isNUPath && category.competencies) {
+            // Handle NU Path competencies
+            const fulfilled = category.competencies.filter(isNUPathCompetencyFulfilled).length;
+            const total = category.competencies.length;
+            const required = Math.min(fulfilled, category.minRequired);
+            const percentage = category.minRequired > 0 ? (required / category.minRequired) * 100 : 0;
+            return { fulfilled, total, required, minRequired: category.minRequired, percentage };
+        } else {
+            // Handle regular CS requirements
+            const fulfilled = category.requirements.filter(isRequirementFulfilled).length;
+            const total = category.requirements.length;
+            const required = Math.min(fulfilled, category.minRequired);
+            const percentage = category.minRequired > 0 ? (required / category.minRequired) * 100 : 0;
+            return { fulfilled, total, required, minRequired: category.minRequired, percentage };
+        }
     };
 
     // Get requirement categories with metadata
@@ -320,27 +365,54 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
             { key: 'Computing_and_Social_Issues', name: 'Computing and Social Issues' },
             { key: 'Electrical_Engineering', name: 'Electrical Engineering' },
             { key: 'Science_Requirement', name: 'Science Requirement' },
-            { key: 'Writing', name: 'Writing' }
+            { key: 'Writing', name: 'Writing' },
+            { key: 'NUPath', name: 'NU Path Requirements', isNUPath: true }
         ];
 
         const categories = categoryMappings.map(mapping => {
-            const requirements = (requirementsData[mapping.key] as CSRequirement[]) || [];
-            const minRequired = requirementsData.requirements[mapping.key]?.minRequired || 0;
-            const description = requirementsData.requirements[mapping.key]?.description || '';
+            if (mapping.isNUPath) {
+                // Handle NU Path requirements
+                const nuPathData = requirementsData.NUPath;
+                const competencies = nuPathData?.competencies || [];
+                const minRequired = competencies.length; // All NU Path competencies are required
+                const description = 'Northeastern University\'s core curriculum requirements';
 
-            console.log(`\nCategory ${mapping.name}:`, {
-                requirementsCount: requirements.length,
-                minRequired,
-                description,
-                sampleRequirements: requirements.slice(0, 3).map(r => r.code)
-            });
+                console.log(`\nCategory ${mapping.name}:`, {
+                    competenciesCount: competencies.length,
+                    minRequired,
+                    description,
+                    sampleCompetencies: competencies.slice(0, 3).map(c => c.code)
+                });
 
-            return {
-                name: mapping.name,
-                requirements,
-                minRequired,
-                description
-            };
+                return {
+                    name: mapping.name,
+                    requirements: [], // NU Path doesn't use CSRequirement format
+                    competencies, // Add competencies for NU Path
+                    minRequired,
+                    description,
+                    isNUPath: true
+                };
+            } else {
+                // Handle regular CS requirements
+                const requirements = (requirementsData[mapping.key] as CSRequirement[]) || [];
+                const minRequired = requirementsData.requirements[mapping.key]?.minRequired || 0;
+                const description = requirementsData.requirements[mapping.key]?.description || '';
+
+                console.log(`\nCategory ${mapping.name}:`, {
+                    requirementsCount: requirements.length,
+                    minRequired,
+                    description,
+                    sampleRequirements: requirements.slice(0, 3).map(r => r.code)
+                });
+
+                return {
+                    name: mapping.name,
+                    requirements,
+                    minRequired,
+                    description,
+                    isNUPath: false
+                };
+            }
         });
 
         console.log('Final categories:', categories);
@@ -379,7 +451,7 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
 
     const totalMinRequired = categories.reduce((sum, cat) => sum + cat.minRequired, 0);
     const totalFulfilled = categories.reduce((sum, cat) => {
-        const progress = getCategoryProgress(cat.requirements, cat.minRequired);
+        const progress = getCategoryProgress(cat);
         return sum + progress.required;
     }, 0);
     const overallProgress = totalMinRequired > 0 ? (totalFulfilled / totalMinRequired) * 100 : 0;
@@ -443,7 +515,7 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
             {/* Requirements Categories */}
             <div className="space-y-4">
                 {categories.map((category) => {
-                    const progress = getCategoryProgress(category.requirements, category.minRequired);
+                    const progress = getCategoryProgress(category);
                     const isExpanded = expandedCategories.has(category.name);
                     const isCompleted = progress.required >= category.minRequired;
 
@@ -498,77 +570,146 @@ export function CSRequirementsChecklist({ plan, onUpdatePlan }: CSRequirementsCh
                             {isExpanded && (
                                 <div className="px-4 pb-4 border-t border-gray-200">
                                     <div className="pt-4 space-y-2">
-                                        {category.requirements.map((requirement, index) => {
-                                            const isFulfilled = isRequirementFulfilled(requirement);
-                                            const isPlanned = isCoursePlanned(requirement);
-                                            const completedCourses = getCompletedCoursesForRequirement(requirement);
+                                        {category.isNUPath && category.competencies ? (
+                                            // Render NU Path competencies
+                                            category.competencies.map((competency) => {
+                                                const isFulfilled = isNUPathCompetencyFulfilled(competency);
+                                                const fulfilledCourses = competency.fulfilledByCourses.filter(courseCode => {
+                                                    const normalizedCourseCode = normalizeCourseCode(courseCode);
+                                                    const planCourses = getAllCourses();
+                                                    const planMatch = planCourses.some(course =>
+                                                        course.code && normalizeCourseCode(course.code) === normalizedCourseCode && course.completed
+                                                    );
+                                                    const dbMatch = completedCourses.some(course =>
+                                                        course.courseCode && normalizeCourseCode(course.courseCode) === normalizedCourseCode
+                                                    );
+                                                    return planMatch || dbMatch;
+                                                });
 
-                                            // Determine if this requirement is needed based on how many are already fulfilled
-                                            const fulfilledCount = category.requirements.slice(0, index + 1).filter(isRequirementFulfilled).length;
-                                            const isNeeded = fulfilledCount <= category.minRequired;
-
-                                            return (
-                                                <div
-                                                    key={requirement.code}
-                                                    className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow ${isFulfilled
-                                                        ? 'bg-green-50 border-green-200'
-                                                        : isPlanned
-                                                            ? 'bg-yellow-50 border-yellow-200'
+                                                return (
+                                                    <div
+                                                        key={competency.code}
+                                                        className={`flex items-center justify-between p-3 rounded-lg border ${isFulfilled
+                                                            ? 'bg-green-50 border-green-200'
                                                             : 'bg-gray-50 border-gray-200'
-                                                        }`}
-                                                    onClick={() => handleCourseDoubleClick(requirement.code)}
-                                                >
-                                                    <div className="flex items-center space-x-3 flex-1 min-w-0">
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                toggleCourseCompletion(requirement.code);
-                                                            }}
-                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${isFulfilled
+                                                            }`}
+                                                    >
+                                                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                                                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${isFulfilled
                                                                 ? 'bg-green-500 border-green-500 text-white'
-                                                                : 'border-gray-300 hover:border-green-500'
-                                                                }`}
-                                                        >
-                                                            {isFulfilled && (
-                                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                </svg>
-                                                            )}
-                                                        </button>
-                                                        <div className="flex-1 min-w-0">
-                                                            <div className="flex items-center space-x-2">
-                                                                <span className="font-bold text-gray-900 flex-shrink-0">{requirement.code}</span>
-                                                                <span className="text-gray-600 truncate">{requirement.name}</span>
-                                                                <span className="text-sm text-gray-500 flex-shrink-0">({requirement.creditHours} credits)</span>
-                                                                {!isNeeded && (
-                                                                    <span className="text-xs text-gray-400 italic flex-shrink-0">(optional)</span>
+                                                                : 'border-gray-300'
+                                                                }`}>
+                                                                {isFulfilled && (
+                                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                    </svg>
                                                                 )}
                                                             </div>
-                                                            {requirement.prerequisites.length > 0 && (
-                                                                <div className="text-xs text-gray-500 mt-1 truncate">
-                                                                    Prerequisites: {requirement.prerequisites.join(', ')}
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center space-x-2">
+                                                                    <span className="font-bold text-gray-900 flex-shrink-0">{competency.code}</span>
+                                                                    <span className="text-gray-600 truncate">{competency.name}</span>
                                                                 </div>
+                                                                {competency.fulfilledByCourses.length > 0 && (
+                                                                    <div className="text-xs text-gray-500 mt-1">
+                                                                        Fulfilled by: {competency.fulfilledByCourses.join(', ')}
+                                                                    </div>
+                                                                )}
+                                                                {isFulfilled && fulfilledCourses.length > 0 && (
+                                                                    <div className="text-xs text-green-600 mt-1">
+                                                                        Completed via: {fulfilledCourses.join(', ')}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div className="ml-4 flex-shrink-0">
+                                                            {isFulfilled ? (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                                    Completed
+                                                                </span>
+                                                            ) : (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                                    Not Completed
+                                                                </span>
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <div className="ml-4 flex-shrink-0">
-                                                        {isFulfilled ? (
-                                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                                Completed
-                                                            </span>
-                                                        ) : isPlanned ? (
-                                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                                Planned
-                                                            </span>
-                                                        ) : (
-                                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                                                Not Planned
-                                                            </span>
-                                                        )}
+                                                );
+                                            })
+                                        ) : (
+                                            // Render regular CS requirements
+                                            category.requirements.map((requirement, index) => {
+                                                const isFulfilled = isRequirementFulfilled(requirement);
+                                                const isPlanned = isCoursePlanned(requirement);
+                                                const completedCourses = getCompletedCoursesForRequirement(requirement);
+
+                                                // Determine if this requirement is needed based on how many are already fulfilled
+                                                const fulfilledCount = category.requirements.slice(0, index + 1).filter(isRequirementFulfilled).length;
+                                                const isNeeded = fulfilledCount <= category.minRequired;
+
+                                                return (
+                                                    <div
+                                                        key={requirement.code}
+                                                        className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow ${isFulfilled
+                                                            ? 'bg-green-50 border-green-200'
+                                                            : isPlanned
+                                                                ? 'bg-yellow-50 border-yellow-200'
+                                                                : 'bg-gray-50 border-gray-200'
+                                                            }`}
+                                                        onClick={() => handleCourseDoubleClick(requirement.code)}
+                                                    >
+                                                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    toggleCourseCompletion(requirement.code);
+                                                                }}
+                                                                className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${isFulfilled
+                                                                    ? 'bg-green-500 border-green-500 text-white'
+                                                                    : 'border-gray-300 hover:border-green-500'
+                                                                    }`}
+                                                            >
+                                                                {isFulfilled && (
+                                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                    </svg>
+                                                                )}
+                                                            </button>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center space-x-2">
+                                                                    <span className="font-bold text-gray-900 flex-shrink-0">{requirement.code}</span>
+                                                                    <span className="text-gray-600 truncate">{requirement.name}</span>
+                                                                    <span className="text-sm text-gray-500 flex-shrink-0">({requirement.creditHours} credits)</span>
+                                                                    {!isNeeded && (
+                                                                        <span className="text-xs text-gray-400 italic flex-shrink-0">(optional)</span>
+                                                                    )}
+                                                                </div>
+                                                                {requirement.prerequisites.length > 0 && (
+                                                                    <div className="text-xs text-gray-500 mt-1 truncate">
+                                                                        Prerequisites: {requirement.prerequisites.join(', ')}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div className="ml-4 flex-shrink-0">
+                                                            {isFulfilled ? (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                                    Completed
+                                                                </span>
+                                                            ) : isPlanned ? (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                                    Planned
+                                                                </span>
+                                                            ) : (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                                    Not Planned
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        })}
+                                                );
+                                            })
+                                        )}
                                     </div>
                                 </div>
                             )}
