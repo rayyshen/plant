@@ -10,7 +10,8 @@ import { SemesterPlan } from '@/components/SemesterPlan';
 import { CSRequirementsChecklist } from '@/components/CSRequirementsChecklist';
 import { MajorRequirementsChecklist } from '@/components/MajorRequirementsChecklist';
 import { Chatbot } from '@/components/Chatbot';
-import { Sprout } from 'lucide-react';
+import { Sprout, Download } from 'lucide-react';
+import { PDFService } from '@/lib/pdf-service';
 
 interface PlanPageProps {
     params: Promise<{
@@ -83,6 +84,16 @@ export default function PlanPage({ params }: PlanPageProps) {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const handleExportPDF = () => {
+        if (!plan) return;
+        PDFService.generatePlanPDF(plan);
+    };
+
+    const handleExportSummaryPDF = () => {
+        if (!plan) return;
+        PDFService.generateSemesterSummaryPDF(plan);
     };
 
     const getStatusColor = (status: string) => {
@@ -298,10 +309,30 @@ export default function PlanPage({ params }: PlanPageProps) {
                                     <p className="text-muted-foreground mb-4">{plan.description}</p>
                                 )}
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-3">
                                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(plan.status)}`}>
                                     {plan.status}
                                 </span>
+                                <div className="flex space-x-2">
+                                    <Button
+                                        onClick={handleExportPDF}
+                                        variant="outline"
+                                        size="sm"
+                                        className="organic-rounded-sm flex items-center space-x-1"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                        <span>Export PDF</span>
+                                    </Button>
+                                    <Button
+                                        onClick={handleExportSummaryPDF}
+                                        variant="outline"
+                                        size="sm"
+                                        className="organic-rounded-sm flex items-center space-x-1"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                        <span>Summary</span>
+                                    </Button>
+                                </div>
                             </div>
                         </div>
 
