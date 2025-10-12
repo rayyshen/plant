@@ -178,7 +178,7 @@ export default function Home() {
               Cultivating academic success through intelligent planning
             </p>
             <p className="text-sm text-muted-foreground/70">
-              © 2024 Plant. Nurturing your educational journey.
+              © 2025 Plant. Nurturing your educational journey.
             </p>
           </div>
         </div>
