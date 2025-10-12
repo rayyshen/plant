@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
 export async function POST(request: NextRequest) {
     try {
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
         const prompt = `
-    Please analyze this Northeastern University transcript/course list PDF and extract all completed courses.
+    Please analyze this Northeastern University transcript/course list PDF and extract all completed courses including transferred courses.
     
     For each course, extract:
     - Course code (e.g., CS 2500, MATH 1341)

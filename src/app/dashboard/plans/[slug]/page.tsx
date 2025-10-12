@@ -8,6 +8,7 @@ import { PlanService } from '@/lib/plan-service';
 import { Plan } from '@/lib/types';
 import { SemesterPlan } from '@/components/SemesterPlan';
 import { CSRequirementsChecklist } from '@/components/CSRequirementsChecklist';
+import { Chatbot } from '@/components/Chatbot';
 import { Sprout } from 'lucide-react';
 
 interface PlanPageProps {
@@ -341,6 +342,9 @@ export default function PlanPage({ params }: PlanPageProps) {
                     </div>
                 </div>
             </main>
+
+            {/* Chatbot */}
+            <Chatbot plan={plan} />
         </div>
     );
 }
