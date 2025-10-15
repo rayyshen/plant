@@ -163,9 +163,3 @@ python score_eval.py  # Evaluate course difficulty
 - Google AI for Gemini integration
 - Firebase for backend services
 - The open-source community for amazing tools and libraries
-
----
-
-**Ready to plant the seeds of success?** 🌱
-
-Join thousands of students who are already growing smarter with Plant's intelligent planning tools.
