@@ -4,12 +4,13 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface PDFUploadProps {
-    onCoursesParsed: (courses: any[]) => void;
+    onCoursesParsed: (courses: unknown[]) => void;
     onError: (error: string) => void;
+    onStartParsing?: () => void;
     isLoading: boolean;
 }
 
-export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUploadProps) {
+export default function PDFUpload({ onCoursesParsed, onError, onStartParsing, isLoading }: PDFUploadProps) {
     const [dragActive, setDragActive] = useState(false);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +59,12 @@ export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUp
         if (!uploadedFile) return;
 
         try {
+            // Notify parent component that parsing is starting
+            onStartParsing?.();
+
+            // Add a small delay to ensure authentication state is ready
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
             const formData = new FormData();
             formData.append('pdf', uploadedFile);
 
@@ -73,8 +80,9 @@ export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUp
             }
 
             onCoursesParsed(data.courses);
-        } catch (error: any) {
-            onError(error.message || 'Failed to upload and parse PDF');
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to upload and parse PDF';
+            onError(errorMessage);
         }
     };
 
@@ -122,7 +130,14 @@ export default function PDFUpload({ onCoursesParsed, onError, isLoading }: PDFUp
                                 disabled={isLoading}
                                 className="organic-rounded-sm"
                             >
-                                {isLoading ? 'Planting...' : 'Plant Courses'}
+                                {isLoading ? (
+                                    <div className="flex items-center space-x-2">
+                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground"></div>
+                                        <span>Planting...</span>
+                                    </div>
+                                ) : (
+                                    'Plant Courses'
+                                )}
                             </Button>
                             <Button
                                 onClick={removeFile}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { PlanService } from '@/lib/plan-service';
 import { Plan } from '@/lib/types';
@@ -15,7 +15,7 @@ export function PlanList({ userId, onPlanSelect }: PlanListProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const loadPlans = async () => {
+    const loadPlans = useCallback(async () => {
         try {
             setIsLoading(true);
             setError(null);
@@ -27,7 +27,7 @@ export function PlanList({ userId, onPlanSelect }: PlanListProps) {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [userId]);
 
     const handleDeletePlan = async (planId: string) => {
         if (!confirm('Are you sure you want to delete this plan? This action cannot be undone.')) {
@@ -80,7 +80,7 @@ export function PlanList({ userId, onPlanSelect }: PlanListProps) {
     // Load plans on component mount
     React.useEffect(() => {
         loadPlans();
-    }, [userId]);
+    }, [userId, loadPlans]);
 
     if (isLoading) {
         return (

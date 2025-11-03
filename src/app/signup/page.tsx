@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import PDFUpload from '@/components/PDFUpload';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Sprout } from 'lucide-react';
 
@@ -16,12 +16,12 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [parsedCourses, setParsedCourses] = useState<any[]>([]);
+    const [parsedCourses, setParsedCourses] = useState<unknown[]>([]);
     const [isParsingCourses, setIsParsingCourses] = useState(false);
     const { signUp } = useAuth();
     const router = useRouter();
 
-    const handleCoursesParsed = (courses: any[]) => {
+    const handleCoursesParsed = (courses: unknown[]) => {
         setParsedCourses(courses);
         setIsParsingCourses(false);
     };
@@ -29,6 +29,11 @@ export default function SignUp() {
     const handleParseError = (error: string) => {
         setError(error);
         setIsParsingCourses(false);
+    };
+
+    const handleStartParsing = () => {
+        setIsParsingCourses(true);
+        setError(''); // Clear any previous errors
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -69,8 +74,9 @@ export default function SignUp() {
             }
 
             router.push('/dashboard');
-        } catch (error: any) {
-            setError(error.message);
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -152,6 +158,7 @@ export default function SignUp() {
                             <PDFUpload
                                 onCoursesParsed={handleCoursesParsed}
                                 onError={handleParseError}
+                                onStartParsing={handleStartParsing}
                                 isLoading={isParsingCourses}
                             />
                             {parsedCourses.length > 0 && (
@@ -159,6 +166,17 @@ export default function SignUp() {
                                     <p className="text-sm text-primary">
                                         🌱 Successfully planted {parsedCourses.length} completed courses!
                                     </p>
+                                </div>
+                            )}
+
+                            {isParsingCourses && (
+                                <div className="mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                                        <p className="text-sm text-primary">
+                                            🌱 Planting your courses... This may take a moment
+                                        </p>
+                                    </div>
                                 </div>
                             )}
                         </div>

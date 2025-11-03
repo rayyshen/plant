@@ -18,6 +18,7 @@
 - **AI Chatbot**: Context-aware academic assistant powered by Google Gemini AI
 - **Course Difficulty Ratings**: 1-5 scale difficulty ratings for 87,000+ courses
 - **PDF Transcript Processing**: Upload and automatically parse your academic transcripts
+- **PDF Export**: Generate comprehensive PDF reports of your academic plans
 
 ### 🌳 Seasonal Planning
 - **Semester Management**: Plan your academic seasons with drag-and-drop course scheduling
@@ -38,6 +39,8 @@
 - **Firebase** (Authentication + Firestore)
 - **Google Generative AI (Gemini 2.0 Flash)** for AI assistance
 - **Next.js API Routes** for server-side functionality
+- **jsPDF** for client-side PDF generation
+- **html2canvas** for advanced PDF rendering
 
 ### Data Processing
 - **Python** web scraping scripts
@@ -125,6 +128,9 @@ The AI chatbot provides:
 ### PDF Processing
 Upload academic transcripts for automatic course extraction using AI vision.
 
+## PDF Export Features
+Plant offers comprehensive PDF export capabilities to help you document and share your academic plans.
+
 ## 🔧 Development
 
 ### Available Scripts
@@ -157,9 +163,3 @@ python score_eval.py  # Evaluate course difficulty
 - Google AI for Gemini integration
 - Firebase for backend services
 - The open-source community for amazing tools and libraries
-
----
-
-**Ready to plant the seeds of success?** 🌱
-
-Join thousands of students who are already growing smarter with Plant's intelligent planning tools.

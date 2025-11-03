@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
 import { Plan } from '@/lib/types';
@@ -56,7 +56,7 @@ export function Chatbot({ plan }: ChatbotProps) {
     }, [messages]);
 
     // Get elective suggestions based on career goal
-    const getElectiveSuggestions = (careerGoal: string, major: string): string => {
+    const getElectiveSuggestions = useCallback((careerGoal: string): string => {
         if (!careerGoal || !coursesWithHardness.length) return '';
 
         // Use the data cache helper function
@@ -74,13 +74,13 @@ export function Chatbot({ plan }: ChatbotProps) {
         ).join('\n');
 
         return `\n\n**🌱 Elective Suggestions for "${careerGoal}":**\n${electiveList}\n\nThese electives align with your career goals and can help you develop relevant skills!`;
-    };
+    }, [coursesWithHardness]);
 
     // Initialize with welcome message
     useEffect(() => {
         if (isOpen && messages.length === 0) {
             const careerGoal = plan.careerGoal?.trim();
-            const electiveSuggestions = careerGoal ? getElectiveSuggestions(careerGoal, plan.major) : '';
+            const electiveSuggestions = careerGoal ? getElectiveSuggestions(careerGoal) : '';
 
             const welcomeMessage: ChatMessage = {
                 id: 'welcome',
@@ -99,7 +99,7 @@ How can I help you today?`,
             };
             setMessages([welcomeMessage]);
         }
-    }, [isOpen, plan.title, plan.major, plan.careerGoal, coursesWithHardness]);
+    }, [isOpen, plan.title, plan.major, plan.careerGoal, coursesWithHardness, getElectiveSuggestions, messages.length]);
 
     const generateContext = () => {
         // Get completed courses

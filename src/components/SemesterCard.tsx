@@ -5,7 +5,7 @@ import { useDroppable } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from '@/components/ui/button';
-import { AutocompleteDropdown, AutocompleteOption } from '@/components/ui/autocomplete-dropdown';
+import { AutocompleteDropdown } from '@/components/ui/autocomplete-dropdown';
 import { Course } from '@/lib/types';
 
 interface SemesterCardProps {
@@ -157,8 +157,8 @@ export function SemesterCard({
     onToggleCourseCompletion,
     onDeleteSemester,
     onRenameSemester,
-    courseOptions,
-    isDragOverlay = false
+    courseOptions
+
 }: SemesterCardProps) {
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState('');
