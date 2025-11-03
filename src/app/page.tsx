@@ -29,7 +29,7 @@ export default function Home() {
   }
 
   if (user) {
-    return null; // Will redirect to dashboard
+    return null; 
   }
 
   return (
