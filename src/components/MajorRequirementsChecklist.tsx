@@ -212,26 +212,6 @@ export function MajorRequirementsChecklist({ plan, onUpdatePlan }: MajorRequirem
         return isFulfilled;
     };
 
-    // Get completed courses for a requirement
-    const getCompletedCoursesForRequirement = (requirement: MajorCourse): (Course | CompletedCourse)[] => {
-        if (!requirement.code) return [];
-
-        const planCourses = getAllCourses();
-        const normalizedRequirementCode = normalizeCourseCode(requirement.code);
-
-        // Get completed courses from plan
-        const planMatches = planCourses.filter(course =>
-            course.code && normalizeCourseCode(course.code) === normalizedRequirementCode && course.completed
-        );
-
-        // Get completed courses from database
-        const dbMatches = completedCourses.filter(course =>
-            course.courseCode && normalizeCourseCode(course.courseCode) === normalizedRequirementCode
-        );
-
-        return [...planMatches, ...dbMatches];
-    };
-
     // Check if a course is planned (added to plan but not completed)
     const isCoursePlanned = (requirement: MajorCourse): boolean => {
         if (!requirement.code) return false;
